@@ -1,43 +1,55 @@
-import * as LIB from 'react-native/Libraries/NewAppScreen';
 import * as RN from 'react-native';
 
-import React from 'react';
-import Section from '@src/components/Section';
+import React, {useEffect, useState} from 'react';
+import {getAllCharacters, getCharacter} from './redux/services/character';
+import {useDispatch, useSelector} from 'react-redux';
+
+import CharacterCard from './components/character';
+import Store from '@models/store';
 
 function App() {
-  const isDarkMode = RN.useColorScheme() === 'dark';
+  const [id, setId] = useState<number>();
+  const dispatch = useDispatch();
 
-  const backgroundStyle = {
-    backgroundColor: isDarkMode ? LIB.Colors.darker : LIB.Colors.lighter,
+  useEffect(() => {
+    dispatch(getAllCharacters());
+  }, []);
+  
+  const character = useSelector(
+    ({characterReducer}: Store) => characterReducer.character,
+  );
+
+  const characterList = useSelector(
+    ({characterReducer}: Store) => characterReducer.characterList,
+  );
+
+  const fetchCharacters = (id: number) => {
+    setId(id);
+    id && dispatch(getCharacter(id));
+  };
+
+  const getData = () => {
+    return id ? (
+      <CharacterCard character={character} />
+    ) : (
+      <RN.FlatList
+        data={characterList}
+        renderItem={({item}) => <CharacterCard character={item} />}
+        keyExtractor={c => c.id.toString()}
+      />
+    );
   };
 
   return (
-    <RN.SafeAreaView style={backgroundStyle}>
-      <RN.StatusBar barStyle={isDarkMode ? 'light-content' : 'dark-content'} />
-      <RN.ScrollView
-        contentInsetAdjustmentBehavior="automatic"
-        style={backgroundStyle}>
-        <LIB.Header />
-        <RN.View
-          style={{
-            backgroundColor: isDarkMode ? LIB.Colors.black : LIB.Colors.white,
-          }}>
-          <Section title="Step One">
-            Edit <RN.Text style={styles.highlight}>App.js</RN.Text> to change
-            this screen and then come back to see your edits.
-          </Section>
-          <Section title="See Your Changes">
-            <LIB.ReloadInstructions />
-          </Section>
-          <Section title="Debug">
-            <LIB.DebugInstructions />
-          </Section>
-          <Section title="Learn More">
-            Read the docs to discover what to do next:
-          </Section>
-          <LIB.LearnMoreLinks />
-        </RN.View>
-      </RN.ScrollView>
+    <RN.SafeAreaView style={styles.container}>
+      <RN.View style={styles.header}>
+        <RN.TextInput
+          placeholder="Search"
+          style={styles.input}
+          onChangeText={text => fetchCharacters(Number(text))}
+        />
+      </RN.View>
+      <RN.View style={styles.content}>{getData()}</RN.View>
     </RN.SafeAreaView>
   );
 }
@@ -45,7 +57,31 @@ function App() {
 export default App;
 
 const styles = RN.StyleSheet.create({
-  highlight: {
-    fontWeight: '700',
+  container: {
+    flex: 1,
+    flexDirection: 'column',
+  },
+  header: {
+    padding: 10,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
+  content: {
+    paddingHorizontal: 10,
+  },
+  input: {
+    flex: 1,
+    fontSize: 18,
+    padding: 15,
+    borderRadius: 24,
+    backgroundColor: 'gray',
+  },
+  button: {
+    width: 60,
+    height: 60,
+    borderRadius: 50,
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: 'gray',
   },
 });
