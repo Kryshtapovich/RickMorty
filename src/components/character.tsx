@@ -1,14 +1,18 @@
-import {Dimensions, Image, StyleSheet, Text, View} from 'react-native';
-import React, {useEffect, useState} from 'react';
-
+import useOrientation from '@hooks/useOrientation';
 import {Character} from '@models/character';
+import React from 'react';
+import {Image, StyleSheet, Text, View} from 'react-native';
 
 interface Props {
   character: Character;
+  reduced?: boolean;
 }
 
-function CharacterCard({character}: Props) {
-  const {width, height} = Dimensions.get('window');
+function CharacterCard(props: Props) {
+  const {character, reduced} = props;
+  const {width, height} = useOrientation();
+
+  const flex = width < height ? 0.4 : 0.2;
 
   const textRow = (field: string, data: string) => (
     <View style={styles.textRow}>
@@ -17,9 +21,14 @@ function CharacterCard({character}: Props) {
     </View>
   );
 
-  return (
+  return reduced ? (
+    <View style={reducedStyles.container}>
+      <Image source={{uri: character.image}} style={reducedStyles.image} />
+      <Text style={reducedStyles.text}>{character.name}</Text>
+    </View>
+  ) : (
     <View style={styles.container}>
-      <Image source={{uri: character.image}} style={styles.image} />
+      <Image source={{uri: character.image}} style={{...styles.image, flex}} />
       <View style={styles.rightBlock}>
         {textRow('Name', character.name)}
         {textRow('Status', character.status)}
@@ -32,11 +41,34 @@ function CharacterCard({character}: Props) {
 
 export default CharacterCard;
 
+const reducedStyles = StyleSheet.create({
+  container: {
+    flex: 1,
+    margin: 8,
+    padding: 12,
+    borderRadius: 20,
+    flexDirection: 'column',
+    backgroundColor: 'gray',
+  },
+  image: {
+    width: "100%",
+    aspectRatio: 1,
+    borderRadius: 20,
+    marginBottom: 10,
+  },
+  text: {
+    textAlign: "center",
+    fontSize: 18,
+    fontWeight: 'bold',
+  },
+});
+
 const styles = StyleSheet.create({
   container: {
     padding: 15,
     marginBottom: 10,
     flexDirection: 'row',
+    alignItems: 'flex-end',
     borderRadius: 15,
     backgroundColor: 'gray',
   },
@@ -57,13 +89,11 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   field: {
-    color: 'black',
     fontSize: 18,
     marginRight: 20,
   },
   data: {
-    color: 'black',
     fontSize: 18,
-    fontWeight: '600',
+    fontWeight: 'bold',
   },
 });

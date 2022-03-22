@@ -1,5 +1,5 @@
-import {ActionType} from '@models/action';
-import {Character} from '@models/character';
+import { ActionType } from "@models/action";
+import { Character } from "@models/character";
 
 export function getCharacterAction(character: Character) {
   return {
@@ -8,9 +8,12 @@ export function getCharacterAction(character: Character) {
   };
 }
 
-export function getCharactersListAction(characters: Array<Character>) {
+export function getCharactersListAction(
+  characters: Array<Character>,
+  nextPage = 1,
+) {
   return {
-    type: ActionType.GET_ALL_CHARACTERS,
-    payload: characters,
+    type: ActionType.GET_CHARACTER_LIST,
+    payload: {characters, nextPage},
   };
 }

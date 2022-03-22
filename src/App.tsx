@@ -1,20 +1,21 @@
 import * as RN from 'react-native';
 
 import React, {useEffect, useState} from 'react';
-import {getAllCharacters, getCharacter} from './redux/services/character';
+import {getCharacterList, getCharacter} from './redux/services/character';
 import {useDispatch, useSelector} from 'react-redux';
 
 import CharacterCard from './components/character';
 import Store from '@models/store';
+import useOrientation from './hooks/useOrientation';
 
 function App() {
   const [id, setId] = useState<number>();
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(getAllCharacters());
+    dispatch(getCharacterList());
   }, []);
-  
+
   const character = useSelector(
     ({characterReducer}: Store) => characterReducer.character,
   );
@@ -23,19 +24,31 @@ function App() {
     ({characterReducer}: Store) => characterReducer.characterList,
   );
 
+  const nextPage = useSelector(
+    ({characterReducer}: Store) => characterReducer.nextPage,
+  );
+
   const fetchCharacters = (id: number) => {
     setId(id);
     id && dispatch(getCharacter(id));
   };
+
+  const {width, height} = useOrientation();
+  const isPortrait = width < height;
 
   const getData = () => {
     return id ? (
       <CharacterCard character={character} />
     ) : (
       <RN.FlatList
+        key={Number(isPortrait)}
         data={characterList}
-        renderItem={({item}) => <CharacterCard character={item} />}
-        keyExtractor={c => c.id.toString()}
+        renderItem={({item}) => (
+          <CharacterCard character={item} reduced={!isPortrait} />
+        )}
+        keyExtractor={(_, i) => i.toString()}
+        numColumns={isPortrait ? 1 : 4}
+        onEndReached={() => dispatch(getCharacterList(nextPage))}
       />
     );
   };

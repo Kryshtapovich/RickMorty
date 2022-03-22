@@ -1,8 +1,8 @@
-import {Character, CharacterList} from '@models/character';
 import {getCharacterAction, getCharactersListAction} from '@actions/character';
-
+import {Character, CharacterList} from '@models/character';
 import {Dispatch} from 'redux';
-import requests from './index';
+
+import requests from '.';
 
 export function getCharacter(id: number) {
   return function (dispatch: Dispatch) {
@@ -13,10 +13,10 @@ export function getCharacter(id: number) {
   };
 }
 
-export function getAllCharacters() {
+export function getCharacterList(page = 1) {
   return function (dispatch: Dispatch) {
-    requests.get<CharacterList>('/character').then(res => {
-      dispatch(getCharactersListAction(res.results));
+    requests.get<CharacterList>(`/character/?page=${page}`).then(res => {
+      dispatch(getCharactersListAction(res.results, page + 1));
       return res.results;
     });
   };

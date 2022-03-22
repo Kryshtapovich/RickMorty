@@ -1,16 +1,17 @@
-import {Action, ActionType} from '@models/action';
-
-import {Character} from '@models/character';
-import {CharacterState} from '@models/state';
+import { ActionType } from "@models/action";
+import { Character } from "@models/character";
+import { CharacterState } from "@models/state";
+import { AnyAction } from "redux";
 
 const initialState: CharacterState = {
   character: {} as Character,
+  nextPage: 1,
   characterList: [],
 };
 
 export function characterReducer(
   state = initialState,
-  action: Action,
+  action: AnyAction,
 ): CharacterState {
   const {type, payload} = action;
 
@@ -21,11 +22,12 @@ export function characterReducer(
         character: payload,
         characterList: [...state.characterList],
       };
-    case ActionType.GET_ALL_CHARACTERS:
+    case ActionType.GET_CHARACTER_LIST:
       return {
         ...state,
         character: {...state.character},
-        characterList: payload,
+        characterList: [...state.characterList, ...payload.characters],
+        nextPage: payload.nextPage,
       };
     default:
       return state;
