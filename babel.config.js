@@ -14,6 +14,7 @@ module.exports = {
           '@store': './src/redux/store',
           '@components': './src/components',
           '@screens': './src/screens',
+          '@navigation': './src/navigation',
         },
       },
     ],
