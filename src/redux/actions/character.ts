@@ -1,9 +1,9 @@
-import { ActionType } from "@models/action";
-import { Character } from "@models/character";
+import {CharacterAction} from '@models/action';
+import {Character} from '@models/character';
 
 export function getCharacterAction(character: Character) {
   return {
-    type: ActionType.GET_CHARACTER,
+    type: CharacterAction.GET_CHARACTER,
     payload: character,
   };
 }
@@ -13,7 +13,19 @@ export function getCharactersListAction(
   nextPage = 1,
 ) {
   return {
-    type: ActionType.GET_CHARACTER_LIST,
+    type: CharacterAction.GET_CHARACTER_LIST,
     payload: {characters, nextPage},
+  };
+}
+
+export function startLoadingAction() {
+  return {
+    type: CharacterAction.START_LOADING,
+  };
+}
+
+export function stopLoadingAction() {
+  return {
+    type: CharacterAction.STOP_LOADING,
   };
 }

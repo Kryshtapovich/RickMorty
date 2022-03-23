@@ -16,7 +16,7 @@ export interface Character {
   image: string;
   episode: Array<string>;
   url: string;
-  created: Date;
+  created: string;
 }
 
 export interface CharacterList {

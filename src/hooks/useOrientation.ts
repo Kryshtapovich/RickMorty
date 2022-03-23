@@ -16,7 +16,11 @@ function useOrientation(onChange?: (width: number, height: number) => void) {
     return () => subscription.remove();
   }, []);
 
-  return window;
+  return {
+    width: window.width,
+    height: window.height,
+    isPortrait: window.width < window.height,
+  };
 }
 
 export default useOrientation;
