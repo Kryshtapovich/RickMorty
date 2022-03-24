@@ -13,10 +13,6 @@ function CharactersScreen() {
   const [id, setId] = useState<number>();
   const dispatch = useDispatch();
 
-  useEffect(() => {
-    dispatch(getCharacterList());
-  }, []);
-
   const character = useSelector(
     ({characterReducer}: Store) => characterReducer.character,
   );
@@ -36,6 +32,10 @@ function CharactersScreen() {
   const offset = useSelector(
     ({scrollReducer}: Store) => scrollReducer.position,
   );
+
+  useEffect(() => {
+    !characterList.length && dispatch(getCharacterList());
+  }, []);
 
   const fetchCharacters = (id: number) => {
     setId(id);

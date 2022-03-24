@@ -1,5 +1,5 @@
-import {ScrollAction} from '../models/action';
+import ScrollAction, {ScrollActionType} from '@models/actions/scroll';
 
-export function getScrollAction(position: number) {
-  return {type: ScrollAction.SET_POSITION, payload: position};
+export function getScrollAction(position: number): ScrollAction {
+  return {type: ScrollActionType.SET_POSITION, payload: {position}};
 }

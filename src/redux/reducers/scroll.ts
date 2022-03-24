@@ -1,6 +1,5 @@
-import { ScrollAction } from "@models/action";
-import { ScrollState } from "@models/state";
-import { AnyAction } from "redux";
+import ScrollAction, {ScrollActionType} from '@models/actions/scroll';
+import ScrollState from '@models/state/scroll';
 
 const initialState: ScrollState = {
   position: 0,
@@ -8,13 +7,13 @@ const initialState: ScrollState = {
 
 export function scrollReducer(
   state = initialState,
-  action: AnyAction,
+  action: ScrollAction,
 ): ScrollState {
   const {type, payload} = action;
 
   switch (type) {
-    case ScrollAction.SET_POSITION:
-      return {...state, position: payload};
+    case ScrollActionType.SET_POSITION:
+      return {...state, position: payload?.position};
     default:
       return state;
   }

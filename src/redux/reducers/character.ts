@@ -1,36 +1,41 @@
-import {CharacterAction} from '@models/action';
+import CharacterAction, {CharacterActionType} from '@models/actions/character';
+import {LoadingActionType} from '@models/actions/loading';
 import {Character} from '@models/character';
-import {CharacterState} from '@models/state';
-import {AnyAction} from 'redux';
+import CharacterState from '@models/state/character';
 
 const initialState: CharacterState = {
-  character: {} as Character,
   nextPage: 1,
   isLoading: false,
   characterList: [],
+  character: {} as Character,
 };
 
 export function characterReducer(
   state = initialState,
-  action: AnyAction,
+  action: CharacterAction,
 ): CharacterState {
-  const {type, payload} = action;
+  const {type} = action;
 
   switch (type) {
-    case CharacterAction.GET_CHARACTER: {
-      return {...state, character: payload};
+    case CharacterActionType.GET_CHARACTER: {
+      const {payload} = action;
+      return {...state, character: payload?.character};
     }
-    case CharacterAction.GET_CHARACTER_LIST: {
+    case CharacterActionType.GET_CHARACTER_LIST: {
+      const {payload} = action;
       return {
         ...state,
-        nextPage: payload.nextPage,
-        characterList: [...state.characterList, ...payload.characters],
+        nextPage: payload?.nextPage,
+        characterList: [
+          ...state.characterList,
+          ...(payload ? payload.characters : []),
+        ],
       };
     }
-    case CharacterAction.START_LOADING: {
+    case LoadingActionType.START: {
       return {...state, isLoading: true};
     }
-    case CharacterAction.STOP_LOADING: {
+    case LoadingActionType.STOP: {
       return {...state, isLoading: false};
     }
     default:
