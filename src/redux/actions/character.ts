@@ -1,5 +1,5 @@
-import CharacterAction, { CharacterActionType } from "@models/actions/character";
-import { Character } from "@models/character";
+import CharacterAction, {CharacterActionType} from '@models/actions/character';
+import {Character} from '@models/character';
 
 export function getCharacterAction(character: Character): CharacterAction {
   return {
@@ -15,5 +15,14 @@ export function getCharactersListAction(
   return {
     type: CharacterActionType.GET_CHARACTER_LIST,
     payload: {nextPage, characters},
+  };
+}
+
+export function setScrollPositionAction(
+  scrollPosition: number,
+): CharacterAction {
+  return {
+    type: CharacterActionType.SCROLLING,
+    payload: {scrollPosition},
   };
 }

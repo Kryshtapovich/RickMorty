@@ -1,13 +1,12 @@
-import FullCharacterCard from '@components/cards/fullCharacter';
-import ReducedCharacterCard from '@components/cards/reducedCharacter';
-import Spinner from '@components/spinner';
-import useOrientation from '@hooks/useOrientation';
-import Store from '@models/store';
-import {getCharacter, getCharacterList} from '@services/character';
-import {setPosition} from '@services/scroll';
-import React, {useEffect, useRef, useState} from 'react';
-import * as RN from 'react-native';
-import {useDispatch, useSelector} from 'react-redux';
+import FullCharacterCard from "@components/cards/fullCharacter";
+import ReducedCharacterCard from "@components/cards/reducedCharacter";
+import Spinner from "@components/spinner";
+import useOrientation from "@hooks/useOrientation";
+import Store from "@models/store";
+import { getCharacter, getCharacterList, setScrollPosition } from "@services/character";
+import React, { useEffect, useRef, useState } from "react";
+import * as RN from "react-native";
+import { useDispatch, useSelector } from "react-redux";
 
 function CharactersScreen() {
   const [id, setId] = useState<number>();
@@ -30,7 +29,7 @@ function CharactersScreen() {
   );
 
   const offset = useSelector(
-    ({scrollReducer}: Store) => scrollReducer.position,
+    ({characterReducer}: Store) => characterReducer.scrollPosition,
   );
 
   useEffect(() => {
@@ -73,7 +72,7 @@ function CharactersScreen() {
         onScroll={({nativeEvent}) => {
           const position =
             nativeEvent.contentOffset.y * (isPortrait ? 0.5 : 2.4);
-          dispatch(setPosition(position));
+          dispatch(setScrollPosition(position));
         }}
         renderItem={({item}) => <ReducedCharacterCard character={item} />}
         keyExtractor={(_, i) => i.toString()}

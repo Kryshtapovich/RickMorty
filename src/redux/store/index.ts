@@ -1,11 +1,11 @@
-import {characterReducer} from '@reducers/character';
-import {scrollReducer} from '@reducers/scroll';
-import {applyMiddleware, combineReducers, createStore} from 'redux';
-import thunkMiddleware from 'redux-thunk';
+import characterReducer from "@reducers/character";
+import locationReducer from "@reducers/location";
+import { applyMiddleware, combineReducers, createStore } from "redux";
+import thunkMiddleware from "redux-thunk";
 
 const rootReducer = combineReducers({
   characterReducer,
-  scrollReducer,
+  locationReducer,
 });
 
 const store = createStore(rootReducer, applyMiddleware(thunkMiddleware));

@@ -1,7 +1,7 @@
-import CharacterState from './state/character';
-import ScrollState from './state/scroll';
+import CharacterState from "./state/character";
+import LocationState from "./state/location";
 
 export default interface Store {
   characterReducer: CharacterState;
-  scrollReducer: ScrollState;
+  locationReducer: LocationState;
 }
