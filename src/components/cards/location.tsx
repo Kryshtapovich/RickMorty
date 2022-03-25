@@ -1,8 +1,10 @@
 import LocationModal from '@components/modals/location';
+import TextRow from '@components/textRow';
 import {Location} from '@models/location';
+import Store from '@models/store';
 import React, {useState} from 'react';
-import {Pressable, StyleSheet} from 'react-native';
-import {Text} from 'react-native-paper';
+import {Pressable, StyleSheet, View} from 'react-native';
+import {useSelector} from 'react-redux';
 
 interface Props {
   location: Location;
@@ -13,17 +15,29 @@ function LocationCard({location}: Props) {
 
   const toggleModal = () => setIsModalShown(!isModalShown);
 
+  const residents = useSelector(({characterReducer}: Store) =>
+    characterReducer.characterList.filter(({url}) =>
+      location.residents.includes(url),
+    ),
+  );
+
   return (
     <>
       <Pressable style={styles.container} onPress={toggleModal}>
-        <Text style={styles.text}>{`${location.id}.`}</Text>
-        <Text style={[styles.text, styles.name]}>{location.name}</Text>
+        <View>
+          <TextRow field="Name" data={location.name} />
+          <TextRow field="Type" data={location.type} />
+          <TextRow field="Dimension" data={location.dimension} />
+          <TextRow field="Created" data={location.created} />
+        </View>
       </Pressable>
-      <LocationModal
-        location={location}
-        toggle={toggleModal}
-        isShown={isModalShown}
-      />
+      {residents.length > 0 && (
+        <LocationModal
+          residents={residents}
+          toggle={toggleModal}
+          isShown={isModalShown}
+        />
+      )}
     </>
   );
 }
@@ -38,12 +52,5 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     backgroundColor: 'gray',
-  },
-  text: {
-    fontSize: 18,
-    fontWeight: 'bold',
-  },
-  name: {
-    marginLeft: 10,
   },
 });
