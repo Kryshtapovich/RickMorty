@@ -1,5 +1,5 @@
-import Character from "../character";
-import LoadingAction from "./loading";
+import Character from '../character';
+import LoadingAction from './loading';
 
 export const enum CharacterActionType {
   GET_CHARACTER = 'GET_CHARACTER',
@@ -16,17 +16,12 @@ interface GetCharacterAction {
 
 interface GetCharacterListAction {
   type: CharacterActionType.GET_CHARACTER_LIST;
-  payload: {
-    nextPage: number;
-    characters: Array<Character>;
-  };
+  payload: {characters: Array<Character>};
 }
 
 interface CharacterListScrollAction {
   type: CharacterActionType.SCROLLING;
-  payload: {
-    scrollPosition: number;
-  };
+  payload: {scrollPosition: number};
 }
 
 type CharacterAction =

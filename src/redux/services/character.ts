@@ -2,7 +2,7 @@ import * as Actions from '@actions/character';
 import {startLoadingAction, stopLoadingAction} from '@actions/loading';
 import CharacterAction from '@models/actions/character';
 import Character from '@models/character';
-import {ResultList} from '@models/pagination';
+import {Pagination, ResultList} from '@models/pagination';
 import {Dispatch} from 'redux';
 
 import requests, {fixDate} from '.';
@@ -21,17 +21,23 @@ export function getCharacter(id: number) {
 }
 
 export function getCharacterList(page = 1) {
-  return function (dispatch: Dispatch<CharacterAction>) {
+  return async function (
+    dispatch: Dispatch<CharacterAction>,
+  ): Promise<Pagination> {
     dispatch(startLoadingAction());
-    requests
-      .get<ResultList<Character>>(`/character/?page=${page}`)
-      .then(({results}) => {
-        setTimeout(() => {
-          const characters = results.map(fixDate);
-          dispatch(Actions.getCharactersListAction(characters, page + 1));
-        }, 2000);
-        setTimeout(() => dispatch(stopLoadingAction()), 2000);
-      });
+
+    const {info, results} = await requests.get<ResultList<Character>>(
+      `/character/?page=${page}`,
+    );
+
+    setTimeout(() => {
+      const characters = results.map(fixDate);
+      dispatch(Actions.getCharactersListAction(characters));
+    }, 2000);
+
+    setTimeout(() => dispatch(stopLoadingAction()), 2000);
+
+    return {nextPage: page + 1, hasMore: info.next !== null};
   };
 }
 

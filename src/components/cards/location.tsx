@@ -1,10 +1,9 @@
 import CharactersModal from '@components/modals/characters';
 import TextRow from '@components/textRow';
 import Location from '@models/location';
-import Store from '@models/store';
+import {useSelector} from '@store';
 import React, {useState} from 'react';
 import {Pressable, StyleSheet} from 'react-native';
-import {useSelector} from 'react-redux';
 
 interface Props {
   location: Location;
@@ -15,7 +14,7 @@ function LocationCard({location}: Props) {
 
   const toggleModal = () => setIsModalShown(!isModalShown);
 
-  const residents = useSelector(({characterReducer}: Store) =>
+  const residents = useSelector(({characterReducer}) =>
     characterReducer.characterList.filter(({url}) =>
       location.residents.includes(url),
     ),
@@ -42,7 +41,7 @@ function LocationCard({location}: Props) {
   );
 }
 
-export default LocationCard;
+export default (LocationCard);
 
 const styles = StyleSheet.create({
   container: {

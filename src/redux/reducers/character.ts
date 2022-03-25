@@ -4,7 +4,6 @@ import Character from '@models/character';
 import CharacterState from '@models/state/character';
 
 const initialState: CharacterState = {
-  nextPage: 1,
   isLoading: false,
   characterList: [],
   scrollPosition: 0,
@@ -26,7 +25,6 @@ function characterReducer(
       const {payload} = action;
       return {
         ...state,
-        nextPage: payload?.nextPage,
         characterList: [...state.characterList, ...payload.characters],
       };
     }

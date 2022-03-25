@@ -1,10 +1,9 @@
 import CharactersModal from '@components/modals/characters';
 import TextRow from '@components/textRow';
 import Episode from '@models/episode';
-import Store from '@models/store';
+import {useSelector} from '@store';
 import React, {useState} from 'react';
 import {Pressable, StyleSheet} from 'react-native';
-import {useSelector} from 'react-redux';
 
 interface Props {
   episode: Episode;
@@ -15,7 +14,7 @@ function EpisodeCard({episode}: Props) {
 
   const toggleModal = () => setIsModalShown(!isModalShown);
 
-  const characters = useSelector(({characterReducer}: Store) =>
+  const characters = useSelector(({characterReducer}) =>
     characterReducer.characterList.filter(({url}) =>
       episode.characters.includes(url),
     ),
@@ -41,7 +40,7 @@ function EpisodeCard({episode}: Props) {
   );
 }
 
-export default EpisodeCard;
+export default React.memo(EpisodeCard);
 
 const styles = StyleSheet.create({
   container: {

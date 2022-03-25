@@ -1,42 +1,31 @@
-import FullCharacterCard from "@components/cards/fullCharacter";
-import ReducedCharacterCard from "@components/cards/reducedCharacter";
-import Spinner from "@components/spinner";
-import useOrientation from "@hooks/useOrientation";
-import Store from "@models/store";
-import { getCharacter, getCharacterList, setScrollPosition } from "@services/character";
-import React, { useEffect, useRef, useState } from "react";
-import * as RN from "react-native";
-import { useDispatch, useSelector } from "react-redux";
+import FullCharacterCard from '@components/cards/fullCharacter';
+import ReducedCharacterCard from '@components/cards/reducedCharacter';
+import Spinner from '@components/spinner';
+import useOrientation from '@hooks/useOrientation';
+import {Pagination} from '@models/pagination';
+import {
+  getCharacter,
+  getCharacterList,
+  setScrollPosition,
+} from '@services/character';
+import {useDispatch, useSelector} from '@store';
+import React, {useEffect, useRef, useState} from 'react';
+import * as RN from 'react-native';
 
 function CharactersScreen() {
   const [id, setId] = useState<number>();
   const dispatch = useDispatch();
 
-  const character = useSelector(
-    ({characterReducer}: Store) => characterReducer.character,
-  );
+  const state = useSelector(({characterReducer}) => characterReducer);
+  const {character, characterList, isLoading, scrollPosition: offset} = state;
 
-  const characterList = useSelector(
-    ({characterReducer}: Store) => characterReducer.characterList,
-  );
-
-  const nextPage = useSelector(
-    ({characterReducer}: Store) => characterReducer.nextPage,
-  );
-
-  const isLoading = useSelector(
-    ({characterReducer}: Store) => characterReducer.isLoading,
-  );
-
-  const offset = useSelector(
-    ({characterReducer}: Store) => characterReducer.scrollPosition,
-  );
+  const [pagination, setPagination] = useState<Pagination>();
 
   useEffect(() => {
-    !characterList.length && dispatch(getCharacterList());
+    !characterList.length && dispatch(getCharacterList()).then(setPagination);
   }, []);
 
-  const fetchCharacters = (id: number) => {
+  const fetchCharacter = (id: number) => {
     setId(id);
     id && dispatch(getCharacter(id));
   };
@@ -50,7 +39,10 @@ function CharactersScreen() {
   }, [isPortrait]);
 
   const endReached = () => {
-    !isLoading && dispatch(getCharacterList(nextPage));
+    if (!isLoading && pagination) {
+      const {nextPage, hasMore} = pagination;
+      hasMore && dispatch(getCharacterList(nextPage)).then(setPagination);
+    }
   };
 
   const paddingBottom = RN.Platform.select({ios: 70, android: 115});
@@ -65,20 +57,20 @@ function CharactersScreen() {
     ) : (
       <RN.FlatList
         ref={listRef}
-        contentContainerStyle={{paddingBottom}}
-        key={Number(isPortrait)}
         data={characterList}
         scrollEventThrottle={16}
+        key={Number(isPortrait)}
+        onEndReached={endReached}
+        numColumns={isPortrait ? 2 : 4}
+        keyExtractor={(_, i) => i.toString()}
+        contentContainerStyle={{paddingBottom}}
+        ListFooterComponent={isLoading ? <Spinner /> : null}
         onScroll={({nativeEvent}) => {
           const position =
             nativeEvent.contentOffset.y * (isPortrait ? 0.5 : 2.4);
           dispatch(setScrollPosition(position));
         }}
         renderItem={({item}) => <ReducedCharacterCard character={item} />}
-        keyExtractor={(_, i) => i.toString()}
-        numColumns={isPortrait ? 2 : 4}
-        onEndReached={endReached}
-        ListFooterComponent={isLoading ? <Spinner /> : null}
       />
     );
   };
@@ -89,7 +81,7 @@ function CharactersScreen() {
         <RN.TextInput
           placeholder="Search"
           style={styles.input}
-          onChangeText={text => fetchCharacters(Number(text))}
+          onChangeText={text => fetchCharacter(Number(text))}
         />
       </RN.View>
       <RN.View style={styles.content}>{getData()}</RN.View>

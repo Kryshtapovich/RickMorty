@@ -3,7 +3,6 @@ import {LoadingActionType} from '@models/actions/loading';
 import EpisodeState from '@models/state/episode';
 
 const initialState: EpisodeState = {
-  nextPage: 1,
   episodes: [],
   isLoading: false,
 };
@@ -20,7 +19,6 @@ function episodeReducer(
 
       return {
         ...state,
-        nextPage: payload.nextPage,
         episodes: [...state.episodes, ...payload.episodes],
       };
     }

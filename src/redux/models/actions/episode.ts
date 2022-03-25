@@ -1,5 +1,5 @@
-import Episode from "../episode";
-import LoadingAction from "./loading";
+import Episode from '../episode';
+import LoadingAction from './loading';
 
 export const enum EpisodeActionType {
   GET_EPISODES = 'GET_EPISODES',
@@ -7,10 +7,7 @@ export const enum EpisodeActionType {
 
 interface GetEpisodesAction {
   type: EpisodeActionType.GET_EPISODES;
-  payload: {
-    nextPage: number;
-    episodes: Array<Episode>;
-  };
+  payload: {episodes: Array<Episode>};
 }
 
 type EpisodeAction = GetEpisodesAction | LoadingAction;

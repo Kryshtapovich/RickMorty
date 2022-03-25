@@ -1,11 +1,14 @@
 export interface Pagination {
-  count: number;
-  pages: number;
-  next: string;
-  prev: string;
+  hasMore: boolean;
+  nextPage: number;
 }
 
 export interface ResultList<T> {
-  info: Pagination;
+  info: {
+    count: number;
+    pages: number;
+    next: string;
+    prev: string;
+  };
   results: Array<T>;
 }

@@ -3,7 +3,6 @@ import LocationAction, {LocationActionType} from '@models/actions/location';
 import LocationState from '@models/state/location';
 
 const initialState: LocationState = {
-  nextPage: 1,
   locations: [],
   isLoading: false,
 };
@@ -19,7 +18,6 @@ function locationReducer(
       const {payload} = action;
       return {
         ...state,
-        nextPage: payload.nextPage,
         locations: [...state.locations, ...payload.locations],
       };
     }

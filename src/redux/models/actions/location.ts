@@ -1,5 +1,5 @@
-import Location from "../location";
-import LoadingAction from "./loading";
+import Location from '../location';
+import LoadingAction from './loading';
 
 export const enum LocationActionType {
   GET_LOCATIONS,
@@ -7,10 +7,7 @@ export const enum LocationActionType {
 
 interface GetLocationsAction {
   type: LocationActionType.GET_LOCATIONS;
-  payload: {
-    nextPage: number;
-    locations: Array<Location>;
-  };
+  payload: {locations: Array<Location>};
 }
 
 type LocationAction = GetLocationsAction | LoadingAction;
