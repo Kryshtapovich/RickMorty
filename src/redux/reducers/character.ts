@@ -1,6 +1,6 @@
 import CharacterAction, {CharacterActionType} from '@models/actions/character';
 import {LoadingActionType} from '@models/actions/loading';
-import {Character} from '@models/character';
+import Character from '@models/character';
 import CharacterState from '@models/state/character';
 
 const initialState: CharacterState = {

@@ -1,4 +1,4 @@
-export interface Character {
+export default interface Character {
   id: number;
   name: string;
   status: string;
@@ -17,14 +17,4 @@ export interface Character {
   episode: Array<string>;
   url: string;
   created: string;
-}
-
-export interface CharacterList {
-  info: {
-    count: number;
-    pages: number;
-    next: string;
-    prev: string;
-  };
-  results: Array<Character>;
 }

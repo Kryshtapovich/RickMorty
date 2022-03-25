@@ -1,4 +1,4 @@
-export interface Location {
+export default interface Location {
   id: number;
   name: string;
   type: string;
@@ -6,14 +6,4 @@ export interface Location {
   residents: Array<string>;
   url: string;
   created: string;
-}
-
-export interface LocationList {
-  info: {
-    count: number;
-    pages: number;
-    next: string;
-    prev: string;
-  };
-  results: Array<Location>;
 }

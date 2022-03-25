@@ -1,10 +1,10 @@
-import LocationModal from "@components/modals/location";
-import TextRow from "@components/textRow";
-import { Episode } from "@models/episode";
-import Store from "@models/store";
-import React, { useState } from "react";
-import { Pressable, StyleSheet, View } from "react-native";
-import { useSelector } from "react-redux";
+import CharactersModal from '@components/modals/characters';
+import TextRow from '@components/textRow';
+import Episode from '@models/episode';
+import Store from '@models/store';
+import React, {useState} from 'react';
+import {Pressable, StyleSheet} from 'react-native';
+import {useSelector} from 'react-redux';
 
 interface Props {
   episode: Episode;
@@ -24,18 +24,17 @@ function EpisodeCard({episode}: Props) {
   return (
     <>
       <Pressable style={styles.container} onPress={toggleModal}>
-        <View>
-          <TextRow field="Name" data={episode.name} />
-          <TextRow field="Air Date" data={episode.air_date} />
-          <TextRow field="Code" data={episode.episode} />
-          <TextRow field="Created" data={episode.created} />
-        </View>
+        <TextRow field="Name" data={episode.name} />
+        <TextRow field="Air Date" data={episode.air_date} />
+        <TextRow field="Code" data={episode.episode} />
+        <TextRow field="Created" data={episode.created} />
       </Pressable>
       {characters.length > 0 && (
-        <LocationModal
-          residents={characters}
+        <CharactersModal
+          title="Characters"
           toggle={toggleModal}
           isShown={isModalShown}
+          characters={characters}
         />
       )}
     </>
@@ -46,10 +45,10 @@ export default EpisodeCard;
 
 const styles = StyleSheet.create({
   container: {
+    flex: 1,
     padding: 15,
     marginBottom: 10,
     borderRadius: 20,
-    flexDirection: 'row',
     alignItems: 'center',
     backgroundColor: 'gray',
   },

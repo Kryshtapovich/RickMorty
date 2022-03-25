@@ -10,18 +10,17 @@
     "moduleResolution": "node",
     "strict": true,
     "noEmit": true,
-    "baseUrl": ".",
+    "baseUrl": "./src",
     "paths": {
-      "@src/*": ["./src/*"],
-      "@hooks/*": ["./src/hooks/*"],
-      "@actions/*": ["./src/redux/actions/*"],
-      "@models/*": ["./src/redux/models/*"],
-      "@reducers/*": ["./src/redux/reducers/*"],
-      "@services/*": ["./src/redux/services/*"],
-      "@store": ["./src/redux/store"],
-      "@components/*": ["./src/components/*"],
-      "@screens/*": ["./src/screens/*"],
-      "@navigation": ["./src/navigation"]
+      "@hooks/*": ["./hooks/*"],
+      "@actions/*": ["./redux/actions/*"],
+      "@models/*": ["./redux/models/*"],
+      "@reducers/*": ["./redux/reducers/*"],
+      "@services/*": ["./redux/services/*"],
+      "@store": ["./redux/store"],
+      "@components/*": ["./components/*"],
+      "@screens/*": ["./screens/*"],
+      "@navigation": ["./navigation"]
     }
   },
   "exclude": ["node_modules"]

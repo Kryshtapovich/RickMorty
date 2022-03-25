@@ -1,10 +1,10 @@
-import EpisodeCard from "@components/cards/episode";
-import Spinner from "@components/spinner";
-import Store from "@models/store";
-import { getEpisodes } from "@services/episode";
-import React, { useEffect } from "react";
-import { FlatList, SafeAreaView, StyleSheet } from "react-native";
-import { useDispatch, useSelector } from "react-redux";
+import EpisodeCard from '@components/cards/episode';
+import Spinner from '@components/spinner';
+import Store from '@models/store';
+import {getEpisodes} from '@services/episode';
+import React, {useEffect} from 'react';
+import {FlatList, SafeAreaView, StyleSheet} from 'react-native';
+import {useDispatch, useSelector} from 'react-redux';
 
 function EpisodesScreen() {
   const dispatch = useDispatch();

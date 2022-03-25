@@ -1,15 +1,18 @@
-import App from '@src/app';
+import Navigation from '@navigation';
 import store from '@store';
 import React from 'react';
 import {AppRegistry} from 'react-native';
+import {SafeAreaProvider} from 'react-native-safe-area-context';
 import {Provider} from 'react-redux';
 
 import {name} from './app.json';
 
-const RNRedux = () => (
+const App = () => (
   <Provider store={store}>
-    <App />
+    <SafeAreaProvider>
+      <Navigation />
+    </SafeAreaProvider>
   </Provider>
 );
 
-AppRegistry.registerComponent(name, () => RNRedux);
+AppRegistry.registerComponent(name, () => App);

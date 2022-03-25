@@ -1,5 +1,5 @@
-import {Location} from '../location';
-import LoadingAction from './loading';
+import Location from "../location";
+import LoadingAction from "./loading";
 
 export const enum LocationActionType {
   GET_LOCATIONS,

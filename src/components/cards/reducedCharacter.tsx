@@ -1,5 +1,5 @@
-import CharacterModal from "@components/modals/character";
-import { Character } from "@models/character";
+import CharacterDetailsModal from "@components/modals/characterDetails";
+import Character from "@models/character";
 import React, { useState } from "react";
 import * as RN from "react-native";
 
@@ -15,13 +15,10 @@ function ReducedCharacterCard({character}: Props) {
   return (
     <>
       <RN.Pressable style={styles.container} onPress={toggleModal}>
-        <RN.Image
-          source={{uri: character.image}}
-          style={styles.image}
-        />
+        <RN.Image source={{uri: character.image}} style={styles.image} />
         <RN.Text style={styles.text}>{character.name}</RN.Text>
       </RN.Pressable>
-      <CharacterModal
+      <CharacterDetailsModal
         character={character}
         isShown={isModalShown}
         toggle={toggleModal}

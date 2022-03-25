@@ -1,6 +1,6 @@
 import TextRow from '@components/textRow';
 import useOrientation from '@hooks/useOrientation';
-import {Character} from '@models/character';
+import Character from '@models/character';
 import React from 'react';
 import {Image, StyleSheet, View} from 'react-native';
 
@@ -15,7 +15,7 @@ function FullCharacterCard({character}: Props) {
   return (
     <View style={styles.container}>
       <Image source={{uri: character.image}} style={styles.image} />
-      <View>
+      <View style={styles.textBlock}>
         <TextRow field="Name" data={character.name} />
         <TextRow field="Status" data={character.status} />
         <TextRow field="Gender" data={character.gender} />
@@ -28,32 +28,35 @@ function FullCharacterCard({character}: Props) {
 
 export default FullCharacterCard;
 
-const portraitStyles = StyleSheet.create({
+const baseStyles = StyleSheet.create({
   container: {
     padding: 15,
     borderRadius: 20,
-    flexDirection: 'column',
     backgroundColor: 'gray',
   },
   image: {
     aspectRatio: 1,
     borderRadius: 20,
-    marginBottom: 10,
   },
+  textBlock: {},
+});
+
+const portraitStyles = StyleSheet.create({
+  ...baseStyles,
+  image: {...baseStyles.image, marginBottom: 10},
 });
 
 const landscapeStyles = StyleSheet.create({
+  ...baseStyles,
   container: {
-    padding: 15,
-    borderRadius: 20,
+    ...baseStyles.container,
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: 'gray',
   },
   image: {
-    flex: 0.5,
-    aspectRatio: 1,
-    borderRadius: 20,
+    ...baseStyles.image,
+    flex: 0.4,
     marginRight: 10,
   },
+  textBlock: {...baseStyles.textBlock, flex: 1},
 });

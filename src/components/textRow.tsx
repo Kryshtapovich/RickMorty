@@ -28,7 +28,7 @@ const styles = StyleSheet.create({
     marginRight: 20,
   },
   data: {
-    width: 200,
+    flex: 1,
     fontSize: 18,
     fontWeight: 'bold',
   },

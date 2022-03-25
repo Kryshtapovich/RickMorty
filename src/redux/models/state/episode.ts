@@ -1,4 +1,4 @@
-import {Episode} from '../episode';
+import Episode from "../episode";
 
 export default interface EpisodeState {
   nextPage: number;

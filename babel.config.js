@@ -5,7 +5,6 @@ module.exports = {
       'module-resolver',
       {
         alias: {
-          '@src': './src',
           '@hooks': './src/hooks',
           '@actions': './src/redux/actions',
           '@models': './src/redux/models',
