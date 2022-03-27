@@ -2,7 +2,7 @@ import TextRow from '@components/textRow';
 import useOrientation from '@hooks/useOrientation';
 import Character from '@models/character';
 import React from 'react';
-import {Image, StyleSheet, View} from 'react-native';
+import {Image, Platform, StyleSheet, View} from 'react-native';
 
 import Modal from '.';
 
@@ -19,7 +19,7 @@ function CharacterDetailsModal(props: Props) {
   const styles = isPortrait ? portraitStyles : landscapeStyles;
 
   return (
-    <Modal isShown={isShown} toggle={toggle}>
+    <Modal isShown={isShown} toggle={toggle} style={styles.modal}>
       <View style={styles.infoBlock}>
         <Image source={{uri: character.image}} style={styles.image} />
         <View style={{flex: 1}}>
@@ -36,6 +36,9 @@ function CharacterDetailsModal(props: Props) {
 export default CharacterDetailsModal;
 
 const portraitStyles = StyleSheet.create({
+  modal: {
+    flex: Platform.select({ios: 0.65, android: 0.85}),
+  },
   infoBlock: {flex: 1},
   image: {
     width: '100%',
@@ -46,13 +49,16 @@ const portraitStyles = StyleSheet.create({
 });
 
 const landscapeStyles = StyleSheet.create({
+  modal: {
+    flex: Platform.select({ios: 0.62, android: 0.65}),
+  },
   infoBlock: {
     marginBottom: 10,
     alignItems: 'center',
     flexDirection: 'row',
   },
   image: {
-    width: '35%',
+    width: Platform.select({ios: '30%', android: '35%'}),
     aspectRatio: 1,
     marginRight: 15,
     borderRadius: 20,

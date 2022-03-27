@@ -17,7 +17,7 @@ function Modal(props: React.PropsWithChildren<Props>) {
   return (
     <RN.Modal
       transparent
-      animationType="slide"
+      animationType="fade"
       visible={isShown}
       onRequestClose={toggle}
       supportedOrientations={['portrait', 'landscape']}>
@@ -36,6 +36,12 @@ function Modal(props: React.PropsWithChildren<Props>) {
 export default Modal;
 
 const baseStyles = RN.StyleSheet.create({
+  container: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+  },
   content: {
     padding: 20,
     borderRadius: 20,
@@ -57,27 +63,14 @@ const baseStyles = RN.StyleSheet.create({
 
 const portraitStyles = RN.StyleSheet.create({
   ...baseStyles,
-  container: {
-    flex: 1,
-    marginTop: 40,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
   content: {
     ...baseStyles.content,
-    flex: 0.65,
     width: '91%',
   },
 });
 
 const landscapelStyles = RN.StyleSheet.create({
   ...baseStyles,
-  container: {
-    flex: 1,
-    marginVertical: 30,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
   content: {
     ...baseStyles.content,
     width: '70%',
