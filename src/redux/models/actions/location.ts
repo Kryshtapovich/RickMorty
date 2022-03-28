@@ -2,7 +2,7 @@ import Location from '../location';
 import LoadingAction from './loading';
 
 export const enum LocationActionType {
-  GET_LOCATIONS,
+  GET_LOCATIONS = "GET_LOCATIONS",
 }
 
 interface GetLocationsAction {
