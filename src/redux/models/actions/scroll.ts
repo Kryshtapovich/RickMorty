@@ -1,23 +1,25 @@
+import {PayloadAction} from '@reduxjs/toolkit';
+
 export const enum ScrollActionType {
   SCROLL_CHARACTERS = 'SCROLL_CHARACTERS',
   SCROLL_LOCATIONS = 'SCROLL_LOCATIONS',
   SCROLL_EPISODES = 'SCROLL_EPISODES',
 }
 
-export interface CharacterScrollAction {
-  type: ScrollActionType.SCROLL_CHARACTERS;
-  payload: {offset: number};
-}
+export type CharacterScrollAction = PayloadAction<
+  number,
+  ScrollActionType.SCROLL_CHARACTERS
+>;
 
-export interface LocationScrollAction {
-  type: ScrollActionType.SCROLL_LOCATIONS;
-  payload: {offset: number};
-}
+export type LocationScrollAction = PayloadAction<
+  number,
+  ScrollActionType.SCROLL_LOCATIONS
+>;
 
-export interface EpisodeScrollAction {
-  type: ScrollActionType.SCROLL_EPISODES;
-  payload: {offset: number};
-}
+export type EpisodeScrollAction = PayloadAction<
+  number,
+  ScrollActionType.SCROLL_EPISODES
+>;
 
 type ScrollAction =
   | CharacterScrollAction

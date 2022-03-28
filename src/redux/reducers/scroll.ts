@@ -1,5 +1,6 @@
-import ScrollAction, {ScrollActionType} from '@models/actions/scroll';
+import ScrollSlice from '@models/slices/scroll';
 import ScrollState from '@models/state/scroll';
+import {createSlice} from '@reduxjs/toolkit';
 
 const initialState: ScrollState = {
   characterOffset: 0,
@@ -7,25 +8,21 @@ const initialState: ScrollState = {
   episodeOffset: 0,
 };
 
-function scrollReducer(
-  state = initialState,
-  action: ScrollAction,
-): ScrollState {
-  const {type, payload} = action;
+const scrollSlice = createSlice<ScrollState, ScrollSlice>({
+  name: 'scroll',
+  initialState,
+  reducers: {
+    scrollCharacters(state, action) {
+      state.characterOffset = action.payload;
+    },
+    scrollLocations(state, action) {
+      state.locationOffset = action.payload;
+    },
+    scrollEpisodes(state, action) {
+      state.episodeOffset = action.payload;
+    },
+  },
+});
 
-  switch (type) {
-    case ScrollActionType.SCROLL_CHARACTERS: {
-      return {...state, characterOffset: payload.offset};
-    }
-    case ScrollActionType.SCROLL_LOCATIONS: {
-      return {...state, locationOffset: payload.offset};
-    }
-    case ScrollActionType.SCROLL_EPISODES: {
-      return {...state, episodeOffset: payload.offset};
-    }
-    default:
-      return state;
-  }
-}
-
-export default scrollReducer;
+export const actions = scrollSlice.actions;
+export default scrollSlice.reducer;

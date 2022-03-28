@@ -1,15 +1,16 @@
+import {PayloadAction} from '@reduxjs/toolkit';
+
 import Episode from '../episode';
-import LoadingAction from './loading';
 
 export const enum EpisodeActionType {
   GET_EPISODES = 'GET_EPISODES',
 }
 
-interface GetEpisodesAction {
-  type: EpisodeActionType.GET_EPISODES;
-  payload: {episodes: Array<Episode>};
-}
+export type GetEpisodesAction = PayloadAction<
+  Array<Episode>,
+  EpisodeActionType.GET_EPISODES
+>;
 
-type EpisodeAction = GetEpisodesAction | LoadingAction;
+type EpisodeAction = GetEpisodesAction;
 
 export default EpisodeAction;

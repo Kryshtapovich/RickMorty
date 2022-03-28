@@ -1,36 +1,27 @@
-import EpisodeAction, {EpisodeActionType} from '@models/actions/episode';
-import {LoadingActionType} from '@models/actions/loading';
+import EpisodeSlice from '@models/slices/episode';
 import EpisodeState from '@models/state/episode';
+import {createSlice} from '@reduxjs/toolkit';
 
 const initialState: EpisodeState = {
   episodes: [],
   isLoading: false,
 };
 
-function episodeReducer(
-  state = initialState,
-  action: EpisodeAction,
-): EpisodeState {
-  const {type} = action;
+const episodeSlice = createSlice<EpisodeState, EpisodeSlice>({
+  name: 'episode',
+  initialState,
+  reducers: {
+    getEpisodes(state, action) {
+      state.episodes = [...state.episodes, ...action.payload];
+    },
+    startLoading(state) {
+      state.isLoading = true;
+    },
+    stopLoading(state) {
+      state.isLoading = false;
+    },
+  },
+});
 
-  switch (type) {
-    case EpisodeActionType.GET_EPISODES: {
-      const {payload} = action;
-
-      return {
-        ...state,
-        episodes: [...state.episodes, ...payload.episodes],
-      };
-    }
-    case LoadingActionType.START: {
-      return {...state, isLoading: true};
-    }
-    case LoadingActionType.STOP: {
-      return {...state, isLoading: false};
-    }
-    default:
-      return state;
-  }
-}
-
-export default episodeReducer;
+export const actions = episodeSlice.actions;
+export default episodeSlice.reducer;

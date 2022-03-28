@@ -1,7 +1,7 @@
-import CharacterAction, {CharacterActionType} from '@models/actions/character';
-import {LoadingActionType} from '@models/actions/loading';
 import Character from '@models/character';
+import CharacterSlice from '@models/slices/character';
 import CharacterState from '@models/state/character';
+import {createSlice} from '@reduxjs/toolkit';
 
 const initialState: CharacterState = {
   isLoading: false,
@@ -9,41 +9,24 @@ const initialState: CharacterState = {
   character: {} as Character,
 };
 
-function characterReducer(
-  state = initialState,
-  action: CharacterAction,
-): CharacterState {
-  const {type} = action;
+const characterSlice = createSlice<CharacterState, CharacterSlice>({
+  name: 'character',
+  initialState,
+  reducers: {
+    getCharacter(state, action) {
+      state.character = action.payload;
+    },
+    getCharacterList(state, action) {
+      state.characterList = [...state.characterList, ...action.payload];
+    },
+    startLoading(state) {
+      state.isLoading = true;
+    },
+    stopLoading(state) {
+      state.isLoading = false;
+    },
+  },
+});
 
-  switch (type) {
-    case CharacterActionType.GET_CHARACTER: {
-      const {payload} = action;
-      return {...state, character: payload.character};
-    }
-    case CharacterActionType.GET_CHARACTER_LIST: {
-      const {payload} = action;
-      return {
-        ...state,
-        characterList: [...state.characterList, ...payload.characters],
-      };
-    }
-    case LoadingActionType.START: {
-      return {
-        ...state,
-        isLoading: true,
-        characterList: [...state.characterList],
-      };
-    }
-    case LoadingActionType.STOP: {
-      return {
-        ...state,
-        isLoading: false,
-        characterList: [...state.characterList],
-      };
-    }
-    default:
-      return state;
-  }
-}
-
-export default characterReducer;
+export const actions = characterSlice.actions;
+export default characterSlice.reducer;

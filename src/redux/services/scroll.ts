@@ -1,25 +1,14 @@
-import {
-  scrollCharactersAction,
-  scrollEpisodesAction,
-  scrollLocationsAction,
-} from '@actions/scroll';
-import ScrollAction from '@models/actions/scroll';
-import {Dispatch} from 'react';
+import {actions} from '@reducers/scroll';
+import {Dispatch} from 'redux';
 
-export function scrollCharacters(offset: number) {
-  return function (dispatch: Dispatch<ScrollAction>) {
-    dispatch(scrollCharactersAction(offset));
-  };
-}
+export const scrollCharacters = (offset: number) => (dispatch: Dispatch) => {
+  dispatch(actions.scrollCharacters(offset));
+};
 
-export function scrollLocations(offset: number) {
-  return function (dispatch: Dispatch<ScrollAction>) {
-    dispatch(scrollLocationsAction(offset));
-  };
-}
+export const scrollLocations = (offset: number) => (dispatch: Dispatch) => {
+  dispatch(actions.scrollLocations(offset));
+};
 
-export function scrollEpisodes(offset: number) {
-  return function (dispatch: Dispatch<ScrollAction>) {
-    dispatch(scrollEpisodesAction(offset));
-  };
-}
+export const scrollEpisodes = (offset: number) => (dispatch: Dispatch) => {
+  dispatch(actions.scrollEpisodes(offset));
+};

@@ -1,15 +1,16 @@
+import {PayloadAction} from '@reduxjs/toolkit';
+
 import Location from '../location';
-import LoadingAction from './loading';
 
 export const enum LocationActionType {
-  GET_LOCATIONS,
+  GET_LOCATIONS = 'GET_LOCATIONS',
 }
 
-interface GetLocationsAction {
-  type: LocationActionType.GET_LOCATIONS;
-  payload: {locations: Array<Location>};
-}
+export type GetLocationsAction = PayloadAction<
+  Array<Location>,
+  LocationActionType.GET_LOCATIONS
+>;
 
-type LocationAction = GetLocationsAction | LoadingAction;
+type LocationType = GetLocationsAction;
 
-export default LocationAction;
+export default LocationType;

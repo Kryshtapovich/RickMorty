@@ -1,28 +1,24 @@
-import {startLoadingAction, stopLoadingAction} from '@actions/loading';
-import {GetLocationListAction} from '@actions/location';
-import LocationAction from '@models/actions/location';
 import Location from '@models/location';
 import {Pagination, ResultList} from '@models/pagination';
+import {actions} from '@reducers/location';
 import {Dispatch} from 'redux';
+
 import requests, {fixDate} from '.';
 
-export function getLocations(page = 1) {
-  return async function (
-    dispatch: Dispatch<LocationAction>,
-  ): Promise<Pagination> {
-    dispatch(startLoadingAction());
+export const getLocations =
+  (page = 1) =>
+  async (dispatch: Dispatch): Promise<Pagination> => {
+    dispatch(actions.startLoading());
 
     const {info, results} = await requests.get<ResultList<Location>>(
       `/location?page=${page}`,
     );
 
-    setTimeout(() => {
-      const locations = results.map(fixDate);
-      dispatch(GetLocationListAction(locations));
-    }, 2000);
+    const locations = results.map(fixDate);
 
-    setTimeout(() => dispatch(stopLoadingAction()), 2000);
+    dispatch(actions.getLocations(locations));
+
+    dispatch(actions.stopLoding());
 
     return {nextPage: page + 1, hasMore: info.next !== null};
   };
-}

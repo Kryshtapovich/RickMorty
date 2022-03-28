@@ -1,35 +1,27 @@
-import {LoadingActionType} from '@models/actions/loading';
-import LocationAction, {LocationActionType} from '@models/actions/location';
+import LocationSlice from '@models/slices/location';
 import LocationState from '@models/state/location';
+import {createSlice} from '@reduxjs/toolkit';
 
 const initialState: LocationState = {
   locations: [],
   isLoading: false,
 };
 
-function locationReducer(
-  state = initialState,
-  action: LocationAction,
-): LocationState {
-  const {type} = action;
+const locationSlice = createSlice<LocationState, LocationSlice>({
+  name: 'location',
+  initialState,
+  reducers: {
+    getLocations(state, action) {
+      state.locations = [...state.locations, ...action.payload];
+    },
+    startLoading(state) {
+      state.isLoading = true;
+    },
+    stopLoding(state) {
+      state.isLoading = false;
+    },
+  },
+});
 
-  switch (type) {
-    case LocationActionType.GET_LOCATIONS: {
-      const {payload} = action;
-      return {
-        ...state,
-        locations: [...state.locations, ...payload.locations],
-      };
-    }
-    case LoadingActionType.START: {
-      return {...state, isLoading: true};
-    }
-    case LoadingActionType.STOP: {
-      return {...state, isLoading: false};
-    }
-    default:
-      return state;
-  }
-}
-
-export default locationReducer;
+export const actions = locationSlice.actions;
+export default locationSlice.reducer;
