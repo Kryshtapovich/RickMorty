@@ -16,12 +16,3 @@ export function getCharactersListAction(
     payload: {characters},
   };
 }
-
-export function setScrollPositionAction(
-  scrollPosition: number,
-): CharacterAction {
-  return {
-    type: CharacterActionType.SCROLLING,
-    payload: {scrollPosition},
-  };
-}

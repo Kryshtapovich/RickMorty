@@ -6,7 +6,6 @@ import CharacterState from '@models/state/character';
 const initialState: CharacterState = {
   isLoading: false,
   characterList: [],
-  scrollPosition: 0,
   character: {} as Character,
 };
 
@@ -26,14 +25,6 @@ function characterReducer(
       return {
         ...state,
         characterList: [...state.characterList, ...payload.characters],
-      };
-    }
-    case CharacterActionType.SCROLLING: {
-      const {payload} = action;
-      return {
-        ...state,
-        scrollPosition: payload.scrollPosition,
-        characterList: [...state.characterList],
       };
     }
     case LoadingActionType.START: {

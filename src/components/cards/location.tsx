@@ -46,10 +46,12 @@ export default (LocationCard);
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    margin: 10,
     padding: 15,
-    marginBottom: 10,
+    height: 170,
     borderRadius: 20,
     alignItems: 'center',
     backgroundColor: 'gray',
+    justifyContent: "space-between",
   },
 });

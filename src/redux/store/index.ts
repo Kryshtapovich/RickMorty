@@ -3,6 +3,7 @@ import Store from '@models/store';
 import characterReducer from '@reducers/character';
 import episodeReducer from '@reducers/episode';
 import locationReducer from '@reducers/location';
+import scrollReducer from '@reducers/scroll';
 import {
   TypedUseSelectorHook,
   useDispatch as reduxDispatch,
@@ -15,6 +16,7 @@ const rootReducer = combineReducers({
   characterReducer,
   locationReducer,
   episodeReducer,
+  scrollReducer,
 });
 
 const store = createStore(rootReducer, applyMiddleware(thunkMiddleware));

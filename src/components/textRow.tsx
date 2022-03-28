@@ -19,7 +19,7 @@ export default TextRow;
 
 const styles = StyleSheet.create({
   container: {
-    marginBottom: 10,
+    // marginBottom: 10,
     flexDirection: 'row',
     alignItems: 'center',
   },

@@ -1,4 +1,4 @@
-import * as Actions from '@actions/character';
+import {getCharacterAction, getCharactersListAction} from '@actions/character';
 import {startLoadingAction, stopLoadingAction} from '@actions/loading';
 import CharacterAction from '@models/actions/character';
 import Character from '@models/character';
@@ -13,7 +13,7 @@ export function getCharacter(id: number) {
     requests.get<Character>(`/character/${id}`).then(res => {
       setTimeout(() => {
         const character = fixDate(res);
-        dispatch(Actions.getCharacterAction(character));
+        dispatch(getCharacterAction(character));
       }, 2000);
       setTimeout(() => dispatch(stopLoadingAction()), 2000);
     });
@@ -32,17 +32,11 @@ export function getCharacterList(page = 1) {
 
     setTimeout(() => {
       const characters = results.map(fixDate);
-      dispatch(Actions.getCharactersListAction(characters));
+      dispatch(getCharactersListAction(characters));
     }, 2000);
 
     setTimeout(() => dispatch(stopLoadingAction()), 2000);
 
     return {nextPage: page + 1, hasMore: info.next !== null};
-  };
-}
-
-export function setScrollPosition(position: number) {
-  return function (dispatch: Dispatch<CharacterAction>) {
-    dispatch(Actions.setScrollPositionAction(position));
   };
 }

@@ -22,7 +22,7 @@ function CharacterDetailsModal(props: Props) {
     <Modal isShown={isShown} toggle={toggle} style={styles.modal}>
       <View style={styles.infoBlock}>
         <Image source={{uri: character.image}} style={styles.image} />
-        <View style={{flex: 1}}>
+        <View style={styles.textBlock}>
           <TextRow field="Status" data={character.status} />
           <TextRow field="Gender" data={character.gender} />
           <TextRow field="Origin" data={character.origin?.name} />
@@ -35,22 +35,33 @@ function CharacterDetailsModal(props: Props) {
 
 export default CharacterDetailsModal;
 
+const baseStyles = StyleSheet.create({
+  image: {
+    aspectRatio: 1,
+    borderRadius: 20,
+  },
+  textBlock: {
+    flex: 1,
+    justifyContent: 'space-evenly',
+  },
+});
+
 const portraitStyles = StyleSheet.create({
+  ...baseStyles,
   modal: {
     flex: Platform.select({ios: 0.65, android: 0.85}),
   },
   infoBlock: {flex: 1},
   image: {
+    ...baseStyles.image,
     width: '100%',
-    aspectRatio: 1,
-    borderRadius: 20,
-    marginBottom: 15,
   },
 });
 
 const landscapeStyles = StyleSheet.create({
+  ...baseStyles,
   modal: {
-    flex: Platform.select({ios: 0.62, android: 0.65}),
+    flex: 0.62,
   },
   infoBlock: {
     marginBottom: 10,
@@ -58,9 +69,12 @@ const landscapeStyles = StyleSheet.create({
     flexDirection: 'row',
   },
   image: {
-    width: Platform.select({ios: '30%', android: '35%'}),
-    aspectRatio: 1,
+    ...baseStyles.image,
+    flex: Platform.select({ios: 0.45, android: 0.5}),
     marginRight: 15,
-    borderRadius: 20,
   },
+  textBlock: {
+    ...baseStyles.textBlock,
+    height: "80%"
+  }
 });
