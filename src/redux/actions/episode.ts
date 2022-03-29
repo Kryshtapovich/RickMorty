@@ -1,9 +1,21 @@
-import EpisodeAction, {EpisodeActionType} from '@models/actions/episode';
+import * as Actions from '@models/actions/episode';
 import Episode from '@models/episode';
+import {PagedList} from '@models/pagination';
 
-export function GetEpisodeListAction(episodes: Array<Episode>): EpisodeAction {
+export function getEpisodesAction(
+  payload: PagedList<Episode>,
+): Actions.GetEpisodesAction {
   return {
-    type: EpisodeActionType.GET_EPISODES,
-    payload: {episodes},
+    type: Actions.EpisodeActionType.GET_EPISODES,
+    payload,
+  };
+}
+
+export function getEpisodesRequestAction(
+  page: number,
+): Actions.GetEpisodesActionRequest {
+  return {
+    type: Actions.EpisodeActionType.GET_EPISODES_REQUEST,
+    payload: {page},
   };
 }

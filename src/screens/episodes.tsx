@@ -1,7 +1,7 @@
+import {getEpisodesRequestAction} from '@actions/episode';
+import {scrollEpisodesAction} from '@actions/scroll';
 import EpisodeCard from '@components/cards/episode';
 import InfiniteScroll from '@components/infiniteScroll';
-import {getEpisodes} from '@services/episode';
-import {scrollEpisodes} from '@services/scroll';
 import {useDispatch, useSelector} from '@store';
 import React from 'react';
 
@@ -9,7 +9,7 @@ function EpisodesScreen() {
   const dispatch = useDispatch();
 
   const state = useSelector(({episodeReducer}) => episodeReducer);
-  const {episodes, isLoading} = state;
+  const {episodes, isLoading, pagination} = state;
 
   const offset = useSelector(({scrollReducer}) => scrollReducer.episodeOffset);
 
@@ -18,9 +18,10 @@ function EpisodesScreen() {
       offset={offset}
       data={episodes}
       isLoading={isLoading}
+      pagination={pagination}
       numColumns={{portrait: 1, landscape: 2}}
-      load={page => dispatch(getEpisodes(page))}
-      onScroll={offset => dispatch(scrollEpisodes(offset))}
+      load={page => dispatch(getEpisodesRequestAction(page))}
+      onScroll={offset => dispatch(scrollEpisodesAction(offset))}
       renderItem={({item}) => <EpisodeCard episode={item} />}
     />
   );

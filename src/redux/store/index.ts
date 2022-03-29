@@ -1,5 +1,4 @@
 import Action from '@models/actions';
-import Store from '@models/store';
 import characterReducer from '@reducers/character';
 import episodeReducer from '@reducers/episode';
 import locationReducer from '@reducers/location';
@@ -9,8 +8,11 @@ import {
   useDispatch as reduxDispatch,
   useSelector as reduxSelector,
 } from 'react-redux';
-import {applyMiddleware, combineReducers, createStore} from 'redux';
-import thunkMiddleware, {ThunkDispatch} from 'redux-thunk';
+import {applyMiddleware, combineReducers, createStore, Dispatch} from 'redux';
+import createSagaMiddleWare from 'redux-saga';
+import rootSaga from '@sagas';
+
+const sagaMiddleware = createSagaMiddleWare();
 
 const rootReducer = combineReducers({
   characterReducer,
@@ -19,10 +21,11 @@ const rootReducer = combineReducers({
   scrollReducer,
 });
 
-const store = createStore(rootReducer, applyMiddleware(thunkMiddleware));
+const store = createStore(rootReducer, applyMiddleware(sagaMiddleware));
 
-export const useDispatch = () =>
-  reduxDispatch<ThunkDispatch<Store, any, Action>>();
+sagaMiddleware.run(rootSaga);
+
+export const useDispatch = () => reduxDispatch<Dispatch<Action>>();
 
 export const useSelector: TypedUseSelectorHook<
   ReturnType<typeof store.getState>

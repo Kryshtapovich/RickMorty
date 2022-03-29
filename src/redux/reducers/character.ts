@@ -7,6 +7,7 @@ const initialState: CharacterState = {
   isLoading: false,
   characterList: [],
   character: {} as Character,
+  pagination: {nextPage: 1, hasMore: true},
 };
 
 function characterReducer(
@@ -22,9 +23,11 @@ function characterReducer(
     }
     case CharacterActionType.GET_CHARACTER_LIST: {
       const {payload} = action;
+
       return {
         ...state,
-        characterList: [...state.characterList, ...payload.characters],
+        pagination: payload.pagination,
+        characterList: [...state.characterList, ...payload.list],
       };
     }
     case LoadingActionType.START: {

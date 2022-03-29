@@ -9,6 +9,7 @@ module.exports = {
           '@actions': './src/redux/actions',
           '@models': './src/redux/models',
           '@reducers': './src/redux/reducers',
+          '@sagas': './src/redux/sagas',
           '@services': './src/redux/services',
           '@store': './src/redux/store',
           '@components': './src/components',

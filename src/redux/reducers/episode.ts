@@ -5,6 +5,7 @@ import EpisodeState from '@models/state/episode';
 const initialState: EpisodeState = {
   episodes: [],
   isLoading: false,
+  pagination: {nextPage: 1, hasMore: true},
 };
 
 function episodeReducer(
@@ -19,7 +20,8 @@ function episodeReducer(
 
       return {
         ...state,
-        episodes: [...state.episodes, ...payload.episodes],
+        pagination: payload.pagination,
+        episodes: [...state.episodes, ...payload.list],
       };
     }
     case LoadingActionType.START: {

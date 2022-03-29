@@ -1,7 +1,7 @@
+import {getLocationsRequestAction} from '@actions/location';
+import {scrollLocationsAction} from '@actions/scroll';
 import LocationCard from '@components/cards/location';
 import InfiniteScroll from '@components/infiniteScroll';
-import {getLocations} from '@services/location';
-import {scrollLocations} from '@services/scroll';
 import {useDispatch, useSelector} from '@store';
 import React from 'react';
 
@@ -9,7 +9,7 @@ function LocationsScreen() {
   const dispatch = useDispatch();
 
   const locationState = useSelector(({locationReducer}) => locationReducer);
-  const {locations, isLoading} = locationState;
+  const {locations, isLoading, pagination} = locationState;
 
   const offset = useSelector(({scrollReducer}) => scrollReducer.locationOffset);
 
@@ -18,9 +18,10 @@ function LocationsScreen() {
       offset={offset}
       data={locations}
       isLoading={isLoading}
+      pagination={pagination}
       numColumns={{portrait: 1, landscape: 2}}
-      load={page => dispatch(getLocations(page))}
-      onScroll={offset => dispatch(scrollLocations(offset))}
+      load={page => dispatch(getLocationsRequestAction(page))}
+      onScroll={offset => dispatch(scrollLocationsAction(offset))}
       renderItem={({item}) => <LocationCard location={item} />}
     />
   );

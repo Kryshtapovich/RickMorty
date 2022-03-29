@@ -16,6 +16,8 @@
       "@actions/*": ["./redux/actions/*"],
       "@models/*": ["./redux/models/*"],
       "@reducers/*": ["./redux/reducers/*"],
+      "@sagas":["./redux/sagas"],
+      "@sagas/*": ["./redux/sagas/*"],
       "@services/*": ["./redux/services/*"],
       "@store": ["./redux/store"],
       "@components/*": ["./components/*"],

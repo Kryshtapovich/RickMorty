@@ -1,9 +1,12 @@
+import {
+  getCharacterListRequestAction,
+  getCharacterRequestAction,
+} from '@actions/character';
+import {scrollCharactersAction} from '@actions/scroll';
 import FullCharacterCard from '@components/cards/fullCharacter';
 import ReducedCharacterCard from '@components/cards/reducedCharacter';
 import InfiniteScroll from '@components/infiniteScroll';
 import Spinner from '@components/spinner';
-import {getCharacter, getCharacterList} from '@services/character';
-import {scrollCharacters} from '@services/scroll';
 import {useDispatch, useSelector} from '@store';
 import React, {useState} from 'react';
 import * as RN from 'react-native';
@@ -13,7 +16,7 @@ function CharactersScreen() {
   const dispatch = useDispatch();
 
   const state = useSelector(({characterReducer}) => characterReducer);
-  const {character, characterList, isLoading} = state;
+  const {character, characterList, pagination, isLoading} = state;
 
   const offset = useSelector(
     ({scrollReducer}) => scrollReducer.characterOffset,
@@ -21,7 +24,7 @@ function CharactersScreen() {
 
   const fetchCharacter = (id: number) => {
     setId(id);
-    id && dispatch(getCharacter(id));
+    id && dispatch(getCharacterRequestAction(id));
   };
 
   const getData = () => {
@@ -37,9 +40,10 @@ function CharactersScreen() {
           offset={offset}
           data={characterList}
           isLoading={isLoading}
+          pagination={pagination}
           numColumns={{portrait: 2, landscape: 4}}
-          load={page => dispatch(getCharacterList(page))}
-          onScroll={offset => dispatch(scrollCharacters(offset))}
+          load={page => dispatch(getCharacterListRequestAction(page))}
+          onScroll={offset => dispatch(scrollCharactersAction(offset))}
           renderItem={({item}) => <ReducedCharacterCard character={item} />}
         />
       );

@@ -5,6 +5,7 @@ import LocationState from '@models/state/location';
 const initialState: LocationState = {
   locations: [],
   isLoading: false,
+  pagination: {nextPage: 1, hasMore: true},
 };
 
 function locationReducer(
@@ -18,7 +19,8 @@ function locationReducer(
       const {payload} = action;
       return {
         ...state,
-        locations: [...state.locations, ...payload.locations],
+        pagination: payload.pagination,
+        locations: [...state.locations, ...payload.list],
       };
     }
     case LoadingActionType.START: {
