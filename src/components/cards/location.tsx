@@ -1,7 +1,8 @@
 import CharactersModal from '@components/modals/characters';
 import TextRow from '@components/textRow';
+import {useStore} from '@stores';
+import {observer} from 'mobx-react-lite';
 import Location from '@models/location';
-import {useSelector} from '@store';
 import React, {useState} from 'react';
 import {Pressable, StyleSheet} from 'react-native';
 
@@ -14,10 +15,9 @@ function LocationCard({location}: Props) {
 
   const toggleModal = () => setIsModalShown(!isModalShown);
 
-  const residents = useSelector(({characterReducer}) =>
-    characterReducer.characterList.filter(({url}) =>
-      location.residents.includes(url),
-    ),
+  const {characterStore} = useStore();
+  const residents = characterStore.characterList.filter(({url}) =>
+    location.residents.includes(url),
   );
 
   return (
@@ -41,7 +41,7 @@ function LocationCard({location}: Props) {
   );
 }
 
-export default (LocationCard);
+export default observer(LocationCard);
 
 const styles = StyleSheet.create({
   container: {
@@ -52,6 +52,6 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     alignItems: 'center',
     backgroundColor: 'gray',
-    justifyContent: "space-between",
+    justifyContent: 'space-between',
   },
 });

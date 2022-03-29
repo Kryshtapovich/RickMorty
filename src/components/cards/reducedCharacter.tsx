@@ -1,7 +1,7 @@
-import CharacterDetailsModal from "@components/modals/characterDetails";
-import Character from "@models/character";
-import React, { useState } from "react";
-import * as RN from "react-native";
+import CharacterDetailsModal from '@components/modals/characterDetails';
+import Character from '@models/character';
+import React, {useState} from 'react';
+import * as RN from 'react-native';
 
 interface Props {
   character: Character;

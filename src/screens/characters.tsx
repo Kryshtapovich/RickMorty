@@ -2,26 +2,22 @@ import FullCharacterCard from '@components/cards/fullCharacter';
 import ReducedCharacterCard from '@components/cards/reducedCharacter';
 import InfiniteScroll from '@components/infiniteScroll';
 import Spinner from '@components/spinner';
-import {getCharacter, getCharacterList} from '@services/character';
-import {scrollCharacters} from '@services/scroll';
-import {useDispatch, useSelector} from '@store';
+import {useStore} from '@stores';
+import {observer} from 'mobx-react-lite';
 import React, {useState} from 'react';
 import * as RN from 'react-native';
 
 function CharactersScreen() {
   const [id, setId] = useState<number>();
-  const dispatch = useDispatch();
 
-  const state = useSelector(({characterReducer}) => characterReducer);
-  const {character, characterList, isLoading} = state;
+  const {characterStore, scrollStore} = useStore();
+  const {character, characterList, isLoading} = characterStore;
 
-  const offset = useSelector(
-    ({scrollReducer}) => scrollReducer.characterOffset,
-  );
+  const {characterOffset} = scrollStore;
 
   const fetchCharacter = (id: number) => {
     setId(id);
-    id && dispatch(getCharacter(id));
+    id && characterStore.getCharacter(id);
   };
 
   const getData = () => {
@@ -34,12 +30,12 @@ function CharactersScreen() {
     } else {
       return (
         <InfiniteScroll
-          offset={offset}
           data={characterList}
           isLoading={isLoading}
+          offset={characterOffset}
+          load={characterStore.getCharacterList}
+          onScroll={scrollStore.scrollCharacters}
           numColumns={{portrait: 2, landscape: 4}}
-          load={page => dispatch(getCharacterList(page))}
-          onScroll={offset => dispatch(scrollCharacters(offset))}
           renderItem={({item}) => <ReducedCharacterCard character={item} />}
         />
       );
@@ -60,7 +56,7 @@ function CharactersScreen() {
   );
 }
 
-export default CharactersScreen;
+export default observer(CharactersScreen);
 
 const styles = RN.StyleSheet.create({
   container: {

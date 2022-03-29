@@ -75,6 +75,6 @@ const landscapeStyles = StyleSheet.create({
   },
   textBlock: {
     ...baseStyles.textBlock,
-    height: "80%"
-  }
+    height: '80%',
+  },
 });

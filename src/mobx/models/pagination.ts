@@ -3,6 +3,11 @@ export interface Pagination {
   nextPage: number;
 }
 
+export interface PagedList<T> {
+  pagination: Pagination;
+  list: Array<T>;
+}
+
 export interface ResultList<T> {
   info: {
     count: number;

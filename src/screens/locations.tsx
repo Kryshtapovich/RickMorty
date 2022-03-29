@@ -1,29 +1,26 @@
 import LocationCard from '@components/cards/location';
 import InfiniteScroll from '@components/infiniteScroll';
-import {getLocations} from '@services/location';
-import {scrollLocations} from '@services/scroll';
-import {useDispatch, useSelector} from '@store';
+import {useStore} from '@stores';
+import {observer} from 'mobx-react-lite';
 import React from 'react';
 
 function LocationsScreen() {
-  const dispatch = useDispatch();
+  const {locationStore, scrollStore} = useStore();
+  const {locations, isLoading} = locationStore;
 
-  const locationState = useSelector(({locationReducer}) => locationReducer);
-  const {locations, isLoading} = locationState;
-
-  const offset = useSelector(({scrollReducer}) => scrollReducer.locationOffset);
+  const {locationOffset} = scrollStore;
 
   return (
     <InfiniteScroll
-      offset={offset}
       data={locations}
       isLoading={isLoading}
+      offset={locationOffset}
+      load={locationStore.getLocations}
+      onScroll={scrollStore.scrollLocations}
       numColumns={{portrait: 1, landscape: 2}}
-      load={page => dispatch(getLocations(page))}
-      onScroll={offset => dispatch(scrollLocations(offset))}
       renderItem={({item}) => <LocationCard location={item} />}
     />
   );
 }
 
-export default LocationsScreen;
+export default observer(LocationsScreen);

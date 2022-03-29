@@ -13,11 +13,10 @@
     "baseUrl": "./src",
     "paths": {
       "@hooks/*": ["./hooks/*"],
-      "@actions/*": ["./redux/actions/*"],
-      "@models/*": ["./redux/models/*"],
-      "@reducers/*": ["./redux/reducers/*"],
-      "@services/*": ["./redux/services/*"],
-      "@store": ["./redux/store"],
+      "@models/*": ["./mobx/models/*"],
+      "@services/*": ["./mobx/services/*"],
+      "@stores": ["./mobx/stores"],
+      "@stores/*": ["./mobx/stores/*"],
       "@components/*": ["./components/*"],
       "@screens/*": ["./screens/*"],
       "@navigation": ["./navigation"]

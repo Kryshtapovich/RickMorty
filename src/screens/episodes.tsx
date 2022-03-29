@@ -1,29 +1,26 @@
 import EpisodeCard from '@components/cards/episode';
 import InfiniteScroll from '@components/infiniteScroll';
-import {getEpisodes} from '@services/episode';
-import {scrollEpisodes} from '@services/scroll';
-import {useDispatch, useSelector} from '@store';
+import {useStore} from '@stores';
+import {observer} from 'mobx-react-lite';
 import React from 'react';
 
 function EpisodesScreen() {
-  const dispatch = useDispatch();
+  const {episodeStore, scrollStore} = useStore();
+  const {episodes, isLoading} = episodeStore;
 
-  const state = useSelector(({episodeReducer}) => episodeReducer);
-  const {episodes, isLoading} = state;
-
-  const offset = useSelector(({scrollReducer}) => scrollReducer.episodeOffset);
+  const {episodeOffset} = scrollStore;
 
   return (
     <InfiniteScroll
-      offset={offset}
       data={episodes}
       isLoading={isLoading}
+      offset={episodeOffset}
+      load={episodeStore.getEpisodes}
+      onScroll={scrollStore.scrollEpisodes}
       numColumns={{portrait: 1, landscape: 2}}
-      load={page => dispatch(getEpisodes(page))}
-      onScroll={offset => dispatch(scrollEpisodes(offset))}
       renderItem={({item}) => <EpisodeCard episode={item} />}
     />
   );
 }
 
-export default EpisodesScreen;
+export default observer(EpisodesScreen);

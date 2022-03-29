@@ -1,7 +1,8 @@
 import CharactersModal from '@components/modals/characters';
 import TextRow from '@components/textRow';
+import {useStore} from '@stores';
+import {observer} from 'mobx-react-lite';
 import Episode from '@models/episode';
-import {useSelector} from '@store';
 import React, {useState} from 'react';
 import {Pressable, StyleSheet} from 'react-native';
 
@@ -14,10 +15,9 @@ function EpisodeCard({episode}: Props) {
 
   const toggleModal = () => setIsModalShown(!isModalShown);
 
-  const characters = useSelector(({characterReducer}) =>
-    characterReducer.characterList.filter(({url}) =>
-      episode.characters.includes(url),
-    ),
+  const {characterStore} = useStore();
+  const characters = characterStore.characterList.filter(({url}) =>
+    episode.characters.includes(url),
   );
 
   return (
@@ -40,7 +40,7 @@ function EpisodeCard({episode}: Props) {
   );
 }
 
-export default React.memo(EpisodeCard);
+export default observer(EpisodeCard);
 
 const styles = StyleSheet.create({
   container: {
