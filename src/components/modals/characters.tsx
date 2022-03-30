@@ -1,5 +1,5 @@
 import useOrientation from '@hooks/useOrientation';
-import Character from '@models/character';
+import Character from 'models/character';
 import React from 'react';
 import * as RN from 'react-native';
 

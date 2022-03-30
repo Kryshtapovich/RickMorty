@@ -1,27 +1,23 @@
 import EpisodeCard from '@components/cards/episode';
 import InfiniteScroll from '@components/infiniteScroll';
-import {getEpisodes} from '@services/episode';
-import {scrollEpisodes} from '@services/scroll';
-import {useDispatch, useSelector} from '@store';
+import {useScroll} from '@context/scroll';
+import Episode from '@models/episode';
+import {GetEpisodesQuery} from '@services/episode';
 import React from 'react';
+import {ListRenderItemInfo} from 'react-native';
 
 function EpisodesScreen() {
-  const dispatch = useDispatch();
-
-  const state = useSelector(({episodeReducer}) => episodeReducer);
-  const {episodes, isLoading} = state;
-
-  const offset = useSelector(({scrollReducer}) => scrollReducer.episodeOffset);
+  const {episode} = useScroll();
 
   return (
     <InfiniteScroll
-      offset={offset}
-      data={episodes}
-      isLoading={isLoading}
+      offset={episode.offset}
+      query={GetEpisodesQuery}
+      onScroll={episode.scroll}
       numColumns={{portrait: 1, landscape: 2}}
-      load={page => dispatch(getEpisodes(page))}
-      onScroll={offset => dispatch(scrollEpisodes(offset))}
-      renderItem={({item}) => <EpisodeCard episode={item} />}
+      renderItem={({item}: ListRenderItemInfo<Episode>) => (
+        <EpisodeCard episode={item} />
+      )}
     />
   );
 }

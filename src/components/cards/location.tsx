@@ -1,7 +1,6 @@
 import CharactersModal from '@components/modals/characters';
 import TextRow from '@components/textRow';
-import Location from '@models/location';
-import {useSelector} from '@store';
+import Location from 'models/location';
 import React, {useState} from 'react';
 import {Pressable, StyleSheet} from 'react-native';
 
@@ -14,11 +13,11 @@ function LocationCard({location}: Props) {
 
   const toggleModal = () => setIsModalShown(!isModalShown);
 
-  const residents = useSelector(({characterReducer}) =>
-    characterReducer.characterList.filter(({url}) =>
-      location.residents.includes(url),
-    ),
-  );
+  // const residents = useSelector(({characterReducer}) =>
+  //   characterReducer.characterList.filter(({url}) =>
+  //     location.residents.includes(url),
+  //   ),
+  // );
 
   return (
     <>
@@ -27,16 +26,16 @@ function LocationCard({location}: Props) {
         <TextRow field="Type" data={location.type} />
         <TextRow field="Dimension" data={location.dimension} />
         <TextRow field="Created" data={location.created} />
-        <TextRow field="Residents" data={residents.length.toString()} />
+        {/* <TextRow field="Residents" data={residents.length.toString()} /> */}
       </Pressable>
-      {residents.length > 0 && (
+      {/* {residents.length > 0 && (
         <CharactersModal
           title="Residents"
           toggle={toggleModal}
           characters={residents}
           isShown={isModalShown}
         />
-      )}
+      )} */}
     </>
   );
 }

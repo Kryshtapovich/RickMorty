@@ -6,11 +6,9 @@ module.exports = {
       {
         alias: {
           '@hooks': './src/hooks',
-          '@actions': './src/redux/actions',
-          '@models': './src/redux/models',
-          '@reducers': './src/redux/reducers',
-          '@services': './src/redux/services',
-          '@store': './src/redux/store',
+          '@models': './src/models',
+          '@services': './src/services',
+          '@context': './src/context',
           '@components': './src/components',
           '@screens': './src/screens',
           '@navigation': './src/navigation',

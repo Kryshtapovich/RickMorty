@@ -1,33 +1,52 @@
+import {useQuery} from '@apollo/client';
 import useOrientation from '@hooks/useOrientation';
-import {Pagination} from '@models/pagination';
-import React, {useEffect, useRef, useState} from 'react';
+import {fixDate} from '@services';
+import {DocumentNode} from 'graphql';
+import {ResultList} from 'models/pagination';
+import React, {useEffect, useRef} from 'react';
 import {FlatList, FlatListProps, SafeAreaView, StyleSheet} from 'react-native';
 
 import Spinner from './spinner';
 
 interface Props {
   offset?: number;
-  isLoading: boolean;
+  query: DocumentNode;
   onScroll?: (offset: number) => void;
-  load: (page: number) => Promise<Pagination>;
   numColumns?: {portrait: number; landscape: number};
 }
 
-type DefaultProps<T> = Omit<FlatListProps<T>, 'numColumns' | 'onScroll'>;
+type DefaultProps<T> = Omit<
+  FlatListProps<T>,
+  'data' | 'numColumns' | 'onScroll'
+>;
 
-function InfiniteScroll<T>(props: DefaultProps<T> & Props) {
-  const {load, isLoading, numColumns, offset, onScroll, ...rest} = props;
+function InfiniteScroll<T extends {created: string}>(
+  props: DefaultProps<T> & Props,
+) {
+  const {query, numColumns, offset, onScroll, ...rest} = props;
 
-  const [pagination, setPagination] = useState<Pagination>();
+  const {data, loading, fetchMore} = useQuery<{list: ResultList<T>}>(query, {
+    variables: {page: 1},
+  });
 
-  useEffect(() => {
-    load(1).then(setPagination);
-  }, []);
+  const mappedData = data?.list.results.map(fixDate);
 
   const endReached = () => {
-    if (pagination) {
-      const {hasMore, nextPage} = pagination;
-      !isLoading && hasMore && load(nextPage).then(setPagination);
+    if (data?.list.info.next) {
+      return fetchMore({
+        variables: {page: data.list.info.next},
+        updateQuery: (prev, {fetchMoreResult}) => {
+          if (!fetchMoreResult) return prev;
+          const info = fetchMoreResult.list.info;
+          const results = [
+            ...prev.list.results,
+            ...fetchMoreResult.list.results,
+          ];
+          return Object.assign({}, prev, {
+            list: {info, results},
+          });
+        },
+      });
     }
   };
 
@@ -44,11 +63,12 @@ function InfiniteScroll<T>(props: DefaultProps<T> & Props) {
       <FlatList
         style={list}
         ref={listRef}
+        data={mappedData}
         scrollEventThrottle={16}
         key={Number(isPortrait)}
         onEndReached={endReached}
         keyExtractor={(_, i) => i.toString()}
-        ListFooterComponent={isLoading ? <Spinner /> : null}
+        ListFooterComponent={loading ? <Spinner /> : null}
         numColumns={isPortrait ? numColumns?.portrait : numColumns?.landscape}
         onScroll={({nativeEvent}) => {
           const ofset = nativeEvent.contentOffset.y;

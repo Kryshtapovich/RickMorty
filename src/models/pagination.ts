@@ -4,11 +4,12 @@ export interface Pagination {
 }
 
 export interface ResultList<T> {
-  info: {
-    count: number;
-    pages: number;
-    next: string;
-    prev: string;
-  };
+  info: {next: string};
   results: Array<T>;
+}
+
+export interface Result<T> {
+  isLoading: boolean;
+  pagination: Pagination;
+  list?: ResultList<T>;
 }

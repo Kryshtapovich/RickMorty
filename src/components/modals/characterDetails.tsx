@@ -1,6 +1,6 @@
 import TextRow from '@components/textRow';
 import useOrientation from '@hooks/useOrientation';
-import Character from '@models/character';
+import Character from 'models/character';
 import React from 'react';
 import {Image, Platform, StyleSheet, View} from 'react-native';
 

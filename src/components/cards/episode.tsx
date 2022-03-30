@@ -1,7 +1,8 @@
+import { useQuery } from '@apollo/client';
 import CharactersModal from '@components/modals/characters';
 import TextRow from '@components/textRow';
-import Episode from '@models/episode';
-import {useSelector} from '@store';
+import { CharacterListQuery } from '@services/character';
+import Episode from 'models/episode';
 import React, {useState} from 'react';
 import {Pressable, StyleSheet} from 'react-native';
 
@@ -14,11 +15,13 @@ function EpisodeCard({episode}: Props) {
 
   const toggleModal = () => setIsModalShown(!isModalShown);
 
-  const characters = useSelector(({characterReducer}) =>
-    characterReducer.characterList.filter(({url}) =>
-      episode.characters.includes(url),
-    ),
-  );
+  const {} = useQuery(CharacterListQuery, )
+
+  // const characters = useSelector(({characterReducer}) =>
+  //   characterReducer.characterList.filter(({url}) =>
+  //     episode.characters.includes(url),
+  //   ),
+  // );
 
   return (
     <>
@@ -28,14 +31,14 @@ function EpisodeCard({episode}: Props) {
         <TextRow field="Code" data={episode.episode} />
         <TextRow field="Created" data={episode.created} />
       </Pressable>
-      {characters.length > 0 && (
+      {/* {characters.length > 0 && (
         <CharactersModal
           title="Characters"
           toggle={toggleModal}
           isShown={isModalShown}
           characters={characters}
         />
-      )}
+      )} */}
     </>
   );
 }
