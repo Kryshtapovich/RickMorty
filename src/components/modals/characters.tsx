@@ -1,5 +1,5 @@
 import useOrientation from '@hooks/useOrientation';
-import Character from 'models/character';
+import {ReducedCharacter} from '@models/character';
 import React from 'react';
 import * as RN from 'react-native';
 
@@ -9,7 +9,7 @@ interface Props {
   title: string;
   isShown: boolean;
   toggle: () => void;
-  characters: Array<Character>;
+  characters: Array<ReducedCharacter>;
 }
 
 function CharactersModal(props: Props) {

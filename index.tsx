@@ -1,17 +1,12 @@
-import {ApolloClient, ApolloProvider, InMemoryCache} from '@apollo/client';
-import {offsetLimitPagination} from '@apollo/client/utilities';
+import {ApolloProvider} from '@apollo/client';
 import {ScrollProvider} from '@context/scroll';
 import Navigation from '@navigation';
+import {client} from '@services';
 import React from 'react';
 import {AppRegistry} from 'react-native';
 import {SafeAreaProvider} from 'react-native-safe-area-context';
 
 import {name} from './app.json';
-
-const client = new ApolloClient({
-  uri: 'https://rickandmortyapi.com/graphql',
-  cache: new InMemoryCache(),
-});
 
 const App = () => (
   <ApolloProvider client={client}>

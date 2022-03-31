@@ -1,6 +1,6 @@
 import TextRow from '@components/textRow';
 import useOrientation from '@hooks/useOrientation';
-import Character from 'models/character';
+import {Character} from 'models/character';
 import React from 'react';
 import {Image, Platform, StyleSheet, View} from 'react-native';
 
@@ -24,6 +24,7 @@ function CharacterDetailsModal(props: Props) {
         <Image source={{uri: character.image}} style={styles.image} />
         <View style={styles.textBlock}>
           <TextRow field="Status" data={character.status} />
+          <TextRow field="Species" data={character.species} />
           <TextRow field="Gender" data={character.gender} />
           <TextRow field="Origin" data={character.origin?.name} />
           <TextRow field="Created" data={character.created} />
@@ -75,6 +76,6 @@ const landscapeStyles = StyleSheet.create({
   },
   textBlock: {
     ...baseStyles.textBlock,
-    height: "80%"
-  }
+    height: '80%',
+  },
 });

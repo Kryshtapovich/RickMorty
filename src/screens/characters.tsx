@@ -2,7 +2,7 @@ import FullCharacterCard from '@components/cards/fullCharacter';
 import ReducedCharacterCard from '@components/cards/reducedCharacter';
 import InfiniteScroll from '@components/infiniteScroll';
 import {useScroll} from '@context/scroll';
-import Character from '@models/character';
+import {Character} from '@models/character';
 import {CharacterListQuery} from '@services/character';
 import React, {useState} from 'react';
 import * as RN from 'react-native';

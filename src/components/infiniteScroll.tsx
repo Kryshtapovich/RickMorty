@@ -3,7 +3,7 @@ import useOrientation from '@hooks/useOrientation';
 import {fixDate} from '@services';
 import {DocumentNode} from 'graphql';
 import {ResultList} from 'models/pagination';
-import React, {useEffect, useRef} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import {FlatList, FlatListProps, SafeAreaView, StyleSheet} from 'react-native';
 
 import Spinner from './spinner';
@@ -29,24 +29,16 @@ function InfiniteScroll<T extends {created: string}>(
     variables: {page: 1},
   });
 
+  const [isLoading, setIsLoading] = useState(loading);
+
   const mappedData = data?.list.results.map(fixDate);
 
   const endReached = () => {
     if (data?.list.info.next) {
-      return fetchMore({
-        variables: {page: data.list.info.next},
-        updateQuery: (prev, {fetchMoreResult}) => {
-          if (!fetchMoreResult) return prev;
-          const info = fetchMoreResult.list.info;
-          const results = [
-            ...prev.list.results,
-            ...fetchMoreResult.list.results,
-          ];
-          return Object.assign({}, prev, {
-            list: {info, results},
-          });
-        },
-      });
+      setIsLoading(true);
+      return fetchMore({variables: {page: data.list.info.next}}).then(() =>
+        setIsLoading(false),
+      );
     }
   };
 
@@ -68,7 +60,7 @@ function InfiniteScroll<T extends {created: string}>(
         key={Number(isPortrait)}
         onEndReached={endReached}
         keyExtractor={(_, i) => i.toString()}
-        ListFooterComponent={loading ? <Spinner /> : null}
+        ListFooterComponent={isLoading ? <Spinner /> : null}
         numColumns={isPortrait ? numColumns?.portrait : numColumns?.landscape}
         onScroll={({nativeEvent}) => {
           const ofset = nativeEvent.contentOffset.y;

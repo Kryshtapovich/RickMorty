@@ -4,7 +4,7 @@ import TextRow from '@components/textRow';
 import useOrientation from '@hooks/useOrientation';
 import {fixDate} from '@services';
 import {CharacterQuery} from '@services/character';
-import Character from 'models/character';
+import {Character} from 'models/character';
 import React from 'react';
 import {Image, StyleSheet, View} from 'react-native';
 
@@ -28,6 +28,7 @@ function FullCharacterCard({id}: Props) {
         <View style={styles.textBlock}>
           <TextRow field="Name" data={character.name} />
           <TextRow field="Status" data={character.status} />
+          <TextRow field="Species" data={character.species} />
           <TextRow field="Gender" data={character.gender} />
           <TextRow field="Origin" data={character.origin?.name} />
           <TextRow field="Created" data={character.created} />
@@ -49,11 +50,12 @@ const baseStyles = StyleSheet.create({
     aspectRatio: 1,
     borderRadius: 20,
   },
-  textBlock: {justifyContent: 'space-evenly'},
+  textBlock: {flex: 1, justifyContent: 'space-evenly'},
 });
 
 const portraitStyles = StyleSheet.create({
   ...baseStyles,
+  container: {...baseStyles.container, height: '90%'},
   image: {...baseStyles.image, marginBottom: 10},
 });
 
@@ -69,5 +71,5 @@ const landscapeStyles = StyleSheet.create({
     flex: 0.4,
     marginRight: 10,
   },
-  textBlock: {...baseStyles.textBlock, flex: 1},
+  textBlock: {...baseStyles.textBlock, height: '80%'},
 });
