@@ -1,11 +1,11 @@
-import {GetEpisodeListAction} from '@actions/episode';
-import {startLoadingAction, stopLoadingAction} from '@actions/loading';
-import EpisodeAction from '@models/actions/episode';
-import Episode from '@models/episode';
-import {Pagination, ResultList} from '@models/pagination';
-import {Dispatch} from 'redux';
+import { GetEpisodeListAction } from "@actions/episode";
+import { startLoadingAction, stopLoadingAction } from "@actions/loading";
+import EpisodeAction from "@models/actions/episode";
+import Episode from "@models/episode";
+import { Pagination, ResultList } from "@models/pagination";
+import { Dispatch } from "redux";
 
-import requests, {fixDate} from '.';
+import requests, { fixDate } from ".";
 
 export function getEpisodes(page = 1) {
   return async function (
@@ -13,7 +13,7 @@ export function getEpisodes(page = 1) {
   ): Promise<Pagination> {
     dispatch(startLoadingAction());
 
-    const {info, results} = await requests.get<ResultList<Episode>>(
+    const { info, results } = await requests.get<ResultList<Episode>>(
       `/episode?page=${page}`,
     );
 
@@ -24,6 +24,6 @@ export function getEpisodes(page = 1) {
 
     setTimeout(() => dispatch(stopLoadingAction()), 2000);
 
-    return {nextPage: page + 1, hasMore: info.next !== null};
+    return { nextPage: page + 1, hasMore: info.next !== null };
   };
 }

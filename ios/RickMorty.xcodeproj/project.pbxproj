@@ -14,6 +14,7 @@
 		3F0345E48109CE55A9BEA54F /* libPods-RickMorty.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1A2008EBDC352D8DFD0649E6 /* libPods-RickMorty.a */; };
 		744E38D095378319B70935C0 /* libPods-RickMorty-RickMortyTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = DAF640F5453971A928521436 /* libPods-RickMorty-RickMortyTests.a */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
+		B9AF624227F8D32400691BC5 /* main.jsbundle in Resources */ = {isa = PBXBuildFile; fileRef = B9AF624127F8D32400691BC5 /* main.jsbundle */; };
 		B9D52C2C27EBC65100A565C7 /* OpenSSL.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = B9D52C2B27EBC65100A565C7 /* OpenSSL.xcframework */; };
 		B9D52C2D27EBC73E00A565C7 /* OpenSSL.xcframework in Resources */ = {isa = PBXBuildFile; fileRef = B9D52C2B27EBC65100A565C7 /* OpenSSL.xcframework */; };
 /* End PBXBuildFile section */
@@ -44,6 +45,7 @@
 		71E95EF2C384064D6ADDF740 /* Pods-RickMorty-RickMortyTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RickMorty-RickMortyTests.debug.xcconfig"; path = "Target Support Files/Pods-RickMorty-RickMortyTests/Pods-RickMorty-RickMortyTests.debug.xcconfig"; sourceTree = "<group>"; };
 		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = RickMorty/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		B35E22BCE19C77247C33A68F /* Pods-RickMorty.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RickMorty.release.xcconfig"; path = "Target Support Files/Pods-RickMorty/Pods-RickMorty.release.xcconfig"; sourceTree = "<group>"; };
+		B9AF624127F8D32400691BC5 /* main.jsbundle */ = {isa = PBXFileReference; lastKnownFileType = text; path = main.jsbundle; sourceTree = "<group>"; };
 		B9D52C2B27EBC65100A565C7 /* OpenSSL.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = OpenSSL.xcframework; path = "Pods/OpenSSL-Universal/Frameworks/OpenSSL.xcframework"; sourceTree = "<group>"; };
 		DAF640F5453971A928521436 /* libPods-RickMorty-RickMortyTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-RickMorty-RickMortyTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
@@ -128,6 +130,7 @@
 		83CBB9F61A601CBA00E9B192 = {
 			isa = PBXGroup;
 			children = (
+				B9AF624127F8D32400691BC5 /* main.jsbundle */,
 				13B07FAE1A68108700A75B9A /* RickMorty */,
 				832341AE1AAA6A7D00B99B32 /* Libraries */,
 				00E356EF1AD99517003FC87E /* RickMortyTests */,
@@ -256,6 +259,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B9AF624227F8D32400691BC5 /* main.jsbundle in Resources */,
 				81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
 			);

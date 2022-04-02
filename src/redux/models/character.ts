@@ -18,3 +18,9 @@ export default interface Character {
   url: string;
   created: string;
 }
+
+export interface ReducedCharacter {
+  id: number;
+  name: string;
+  image: string;
+}

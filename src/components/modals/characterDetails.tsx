@@ -1,10 +1,10 @@
-import TextRow from '@components/textRow';
-import useOrientation from '@hooks/useOrientation';
-import Character from '@models/character';
-import React from 'react';
-import {Image, Platform, StyleSheet, View} from 'react-native';
+import TextRow from "@components/textRow";
+import useOrientation from "@hooks/useOrientation";
+import Character from "@models/character";
+import React from "react";
+import { Image, Platform, StyleSheet, View } from "react-native";
 
-import Modal from '.';
+import Modal from ".";
 
 interface Props {
   character: Character;
@@ -13,15 +13,15 @@ interface Props {
 }
 
 function CharacterDetailsModal(props: Props) {
-  const {character, isShown, toggle} = props;
+  const { character, isShown, toggle } = props;
 
-  const {isPortrait} = useOrientation();
+  const { isPortrait } = useOrientation();
   const styles = isPortrait ? portraitStyles : landscapeStyles;
 
   return (
     <Modal isShown={isShown} toggle={toggle} style={styles.modal}>
       <View style={styles.infoBlock}>
-        <Image source={{uri: character.image}} style={styles.image} />
+        <Image source={{ uri: character.image }} style={styles.image} />
         <View style={styles.textBlock}>
           <TextRow field="Status" data={character.status} />
           <TextRow field="Gender" data={character.gender} />
@@ -40,41 +40,40 @@ const baseStyles = StyleSheet.create({
     aspectRatio: 1,
     borderRadius: 20,
   },
-  textBlock: {
-    flex: 1,
-    justifyContent: 'space-evenly',
-  },
+  textBlock: { height: "30%", justifyContent: "space-between" },
 });
 
 const portraitStyles = StyleSheet.create({
   ...baseStyles,
   modal: {
-    flex: Platform.select({ios: 0.65, android: 0.85}),
+    height: Platform.select({ ios: "67%", android: "85%" }),
   },
-  infoBlock: {flex: 1},
   image: {
     ...baseStyles.image,
-    width: '100%',
+    marginBottom: 10,
+    width: "100%",
   },
+  infoBlock: {},
 });
 
 const landscapeStyles = StyleSheet.create({
   ...baseStyles,
   modal: {
-    flex: 0.62,
+    height: "65%",
   },
   infoBlock: {
     marginBottom: 10,
-    alignItems: 'center',
-    flexDirection: 'row',
+    alignItems: "center",
+    flexDirection: "row",
   },
   image: {
     ...baseStyles.image,
-    flex: Platform.select({ios: 0.45, android: 0.5}),
+    width: "30%",
     marginRight: 15,
   },
   textBlock: {
     ...baseStyles.textBlock,
-    height: "80%"
-  }
+    width: "100%",
+    height: "70%",
+  },
 });

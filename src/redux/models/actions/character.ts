@@ -1,9 +1,9 @@
-import Character from '../character';
-import LoadingAction from './loading';
+import Character from "../character";
+import LoadingAction from "./loading";
 
 export const enum CharacterActionType {
-  GET_CHARACTER = 'GET_CHARACTER',
-  GET_CHARACTER_LIST = 'GET_CHARACTER_LIST',
+  GET_CHARACTER = "GET_CHARACTER",
+  GET_CHARACTER_LIST = "GET_CHARACTER_LIST",
 }
 
 interface GetCharacterAction {
@@ -15,7 +15,7 @@ interface GetCharacterAction {
 
 interface GetCharacterListAction {
   type: CharacterActionType.GET_CHARACTER_LIST;
-  payload: {characters: Array<Character>};
+  payload: { characters: Array<Character> };
 }
 
 type CharacterAction =

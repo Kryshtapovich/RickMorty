@@ -7,7 +7,7 @@ interface Props {
   character: Character;
 }
 
-function ReducedCharacterCard({character}: Props) {
+function ReducedCharacterCard({ character }: Props) {
   const [isModalShown, setIsModalShown] = useState(false);
 
   const toggleModal = () => setIsModalShown(!isModalShown);
@@ -15,7 +15,7 @@ function ReducedCharacterCard({character}: Props) {
   return (
     <>
       <RN.Pressable style={styles.container} onPress={toggleModal}>
-        <RN.Image source={{uri: character.image}} style={styles.image} />
+        <RN.Image source={{ uri: character.image }} style={styles.image} />
         <RN.Text style={styles.text}>{character.name}</RN.Text>
       </RN.Pressable>
       <CharacterDetailsModal
@@ -35,18 +35,18 @@ const styles = RN.StyleSheet.create({
     margin: 8,
     padding: 12,
     borderRadius: 20,
-    flexDirection: 'column',
-    backgroundColor: 'gray',
+    flexDirection: "column",
+    backgroundColor: "gray",
   },
   image: {
-    width: '100%',
+    width: "100%",
     aspectRatio: 1,
     borderRadius: 20,
     marginBottom: 10,
   },
   text: {
     fontSize: 18,
-    fontWeight: 'bold',
-    textAlign: 'center',
+    fontWeight: "bold",
+    textAlign: "center",
   },
 });

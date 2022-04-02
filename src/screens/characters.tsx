@@ -1,22 +1,22 @@
-import FullCharacterCard from '@components/cards/fullCharacter';
-import ReducedCharacterCard from '@components/cards/reducedCharacter';
-import InfiniteScroll from '@components/infiniteScroll';
-import Spinner from '@components/spinner';
-import {getCharacter, getCharacterList} from '@services/character';
-import {scrollCharacters} from '@services/scroll';
-import {useDispatch, useSelector} from '@store';
-import React, {useState} from 'react';
-import * as RN from 'react-native';
+import FullCharacterCard from "@components/cards/fullCharacter";
+import ReducedCharacterCard from "@components/cards/reducedCharacter";
+import InfiniteScroll from "@components/infiniteScroll";
+import Spinner from "@components/spinner";
+import { getCharacter, getCharacterList } from "@services/character";
+import { scrollCharacters } from "@services/scroll";
+import { useDispatch, useSelector } from "@store";
+import React, { useState } from "react";
+import * as RN from "react-native";
 
 function CharactersScreen() {
   const [id, setId] = useState<number>();
   const dispatch = useDispatch();
 
-  const state = useSelector(({characterReducer}) => characterReducer);
-  const {character, characterList, isLoading} = state;
+  const state = useSelector(({ characterReducer }) => characterReducer);
+  const { character, characterList, isLoading } = state;
 
   const offset = useSelector(
-    ({scrollReducer}) => scrollReducer.characterOffset,
+    ({ scrollReducer }) => scrollReducer.characterOffset,
   );
 
   const fetchCharacter = (id: number) => {
@@ -37,10 +37,10 @@ function CharactersScreen() {
           offset={offset}
           data={characterList}
           isLoading={isLoading}
-          numColumns={{portrait: 2, landscape: 4}}
+          numColumns={{ portrait: 2, landscape: 4 }}
           load={page => dispatch(getCharacterList(page))}
           onScroll={offset => dispatch(scrollCharacters(offset))}
-          renderItem={({item}) => <ReducedCharacterCard character={item} />}
+          renderItem={({ item }) => <ReducedCharacterCard character={item} />}
         />
       );
     }
@@ -68,8 +68,8 @@ const styles = RN.StyleSheet.create({
   },
   header: {
     padding: 10,
-    flexDirection: 'row',
-    justifyContent: 'space-between',
+    flexDirection: "row",
+    justifyContent: "space-between",
   },
   content: {
     paddingHorizontal: 10,
@@ -79,14 +79,14 @@ const styles = RN.StyleSheet.create({
     fontSize: 18,
     padding: 15,
     borderRadius: 24,
-    backgroundColor: 'gray',
+    backgroundColor: "gray",
   },
   button: {
     width: 60,
     height: 60,
     borderRadius: 50,
-    alignItems: 'center',
-    justifyContent: 'center',
-    backgroundColor: 'gray',
+    alignItems: "center",
+    justifyContent: "center",
+    backgroundColor: "gray",
   },
 });

@@ -1,9 +1,9 @@
-import LoadingAction, {LoadingActionType} from '@models/actions/loading';
+import LoadingAction, { LoadingActionType } from "@models/actions/loading";
 
 export function startLoadingAction(): LoadingAction {
-  return {type: LoadingActionType.START};
+  return { type: LoadingActionType.START };
 }
 
 export function stopLoadingAction(): LoadingAction {
-  return {type: LoadingActionType.STOP};
+  return { type: LoadingActionType.STOP };
 }

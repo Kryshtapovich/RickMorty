@@ -1,12 +1,12 @@
-import React from 'react';
-import {StyleSheet, Text, View} from 'react-native';
+import React from "react";
+import { StyleSheet, Text, View } from "react-native";
 
 interface Props {
   field: string;
   data: string;
 }
 
-function TextRow({field, data}: Props) {
+function TextRow({ field, data }: Props) {
   return (
     <View style={styles.container}>
       <Text style={styles.field}>{`${field}:`}</Text>
@@ -19,8 +19,8 @@ export default TextRow;
 
 const styles = StyleSheet.create({
   container: {
-    flexDirection: 'row',
-    alignItems: 'center',
+    flexDirection: "row",
+    alignItems: "center",
   },
   field: {
     fontSize: 18,
@@ -29,6 +29,6 @@ const styles = StyleSheet.create({
   data: {
     flex: 1,
     fontSize: 18,
-    fontWeight: 'bold',
+    fontWeight: "bold",
   },
 });

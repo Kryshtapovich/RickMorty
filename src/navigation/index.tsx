@@ -1,10 +1,10 @@
-import {createMaterialBottomTabNavigator} from '@react-navigation/material-bottom-tabs';
-import {NavigationContainer} from '@react-navigation/native';
-import CharactersScreen from '@screens/characters';
-import EpisodesScreen from '@screens/episodes';
-import LocationsScreen from '@screens/locations';
-import React from 'react';
-import Icon from 'react-native-vector-icons/FontAwesome';
+import { createMaterialBottomTabNavigator } from "@react-navigation/material-bottom-tabs";
+import { NavigationContainer } from "@react-navigation/native";
+import CharactersScreen from "@screens/characters";
+import EpisodesScreen from "@screens/episodes";
+import LocationsScreen from "@screens/locations";
+import React from "react";
+import Icon from "react-native-vector-icons/FontAwesome";
 
 const Tab = createMaterialBottomTabNavigator();
 
@@ -19,29 +19,29 @@ function Navigation() {
         initialRouteName="Characters"
         activeColor="#e91e63"
         inactiveColor="black"
-        barStyle={{backgroundColor: 'white'}}>
+        barStyle={{ backgroundColor: "white" }}>
         <Tab.Screen
           name="Characters"
           component={CharactersScreen}
           options={{
-            tabBarLabel: 'Characters',
-            tabBarIcon: ({color}) => icon('group', color),
+            tabBarLabel: "Characters",
+            tabBarIcon: ({ color }) => icon("group", color),
           }}
         />
         <Tab.Screen
           name="Locations"
           component={LocationsScreen}
           options={{
-            tabBarLabel: 'Locations',
-            tabBarIcon: ({color}) => icon('photo', color),
+            tabBarLabel: "Locations",
+            tabBarIcon: ({ color }) => icon("photo", color),
           }}
         />
         <Tab.Screen
           name="Episodes"
           component={EpisodesScreen}
           options={{
-            tabBarLabel: 'Episodes',
-            tabBarIcon: ({color}) => icon('video-camera', color),
+            tabBarLabel: "Episodes",
+            tabBarIcon: ({ color }) => icon("video-camera", color),
           }}
         />
       </Tab.Navigator>

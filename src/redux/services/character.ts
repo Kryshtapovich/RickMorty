@@ -1,11 +1,15 @@
-import {getCharacterAction, getCharactersListAction} from '@actions/character';
-import {startLoadingAction, stopLoadingAction} from '@actions/loading';
-import CharacterAction from '@models/actions/character';
-import Character from '@models/character';
-import {Pagination, ResultList} from '@models/pagination';
-import {Dispatch} from 'redux';
+import {
+  getCharacterAction,
+  getCharactersListAction,
+} from "@actions/character";
+import { startLoadingAction, stopLoadingAction } from "@actions/loading";
+import CharacterAction from "@models/actions/character";
+import Character, { ReducedCharacter } from "@models/character";
+import { Pagination, ResultList } from "@models/pagination";
+import axios from "axios";
+import { Dispatch } from "redux";
 
-import requests, {fixDate} from '.';
+import requests, { fixDate } from ".";
 
 export function getCharacter(id: number) {
   return function (dispatch: Dispatch<CharacterAction>) {
@@ -26,7 +30,7 @@ export function getCharacterList(page = 1) {
   ): Promise<Pagination> {
     dispatch(startLoadingAction());
 
-    const {info, results} = await requests.get<ResultList<Character>>(
+    const { info, results } = await requests.get<ResultList<Character>>(
       `/character/?page=${page}`,
     );
 
@@ -37,6 +41,14 @@ export function getCharacterList(page = 1) {
 
     setTimeout(() => dispatch(stopLoadingAction()), 2000);
 
-    return {nextPage: page + 1, hasMore: info.next !== null};
+    return { nextPage: page + 1, hasMore: info.next !== null };
   };
+}
+
+export function getReducedCharacters(characterUrls: Array<string>) {
+  return Promise.all(
+    characterUrls.map(url =>
+      axios.get<ReducedCharacter>(url).then(res => res.data),
+    ),
+  );
 }

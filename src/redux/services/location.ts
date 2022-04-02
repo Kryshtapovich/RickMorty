@@ -1,10 +1,10 @@
-import {startLoadingAction, stopLoadingAction} from '@actions/loading';
-import {GetLocationListAction} from '@actions/location';
-import LocationAction from '@models/actions/location';
-import Location from '@models/location';
-import {Pagination, ResultList} from '@models/pagination';
-import {Dispatch} from 'redux';
-import requests, {fixDate} from '.';
+import { startLoadingAction, stopLoadingAction } from "@actions/loading";
+import { GetLocationListAction } from "@actions/location";
+import LocationAction from "@models/actions/location";
+import Location from "@models/location";
+import { Pagination, ResultList } from "@models/pagination";
+import { Dispatch } from "redux";
+import requests, { fixDate } from ".";
 
 export function getLocations(page = 1) {
   return async function (
@@ -12,7 +12,7 @@ export function getLocations(page = 1) {
   ): Promise<Pagination> {
     dispatch(startLoadingAction());
 
-    const {info, results} = await requests.get<ResultList<Location>>(
+    const { info, results } = await requests.get<ResultList<Location>>(
       `/location?page=${page}`,
     );
 
@@ -23,6 +23,6 @@ export function getLocations(page = 1) {
 
     setTimeout(() => dispatch(stopLoadingAction()), 2000);
 
-    return {nextPage: page + 1, hasMore: info.next !== null};
+    return { nextPage: page + 1, hasMore: info.next !== null };
   };
 }

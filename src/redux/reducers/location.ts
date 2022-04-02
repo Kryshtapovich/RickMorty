@@ -1,6 +1,6 @@
-import {LoadingActionType} from '@models/actions/loading';
-import LocationAction, {LocationActionType} from '@models/actions/location';
-import LocationState from '@models/state/location';
+import { LoadingActionType } from "@models/actions/loading";
+import LocationAction, { LocationActionType } from "@models/actions/location";
+import LocationState from "@models/state/location";
 
 const initialState: LocationState = {
   locations: [],
@@ -11,21 +11,21 @@ function locationReducer(
   state = initialState,
   action: LocationAction,
 ): LocationState {
-  const {type} = action;
+  const { type } = action;
 
   switch (type) {
     case LocationActionType.GET_LOCATIONS: {
-      const {payload} = action;
+      const { payload } = action;
       return {
         ...state,
         locations: [...state.locations, ...payload.locations],
       };
     }
     case LoadingActionType.START: {
-      return {...state, isLoading: true};
+      return { ...state, isLoading: true };
     }
     case LoadingActionType.STOP: {
-      return {...state, isLoading: false};
+      return { ...state, isLoading: false };
     }
     default:
       return state;

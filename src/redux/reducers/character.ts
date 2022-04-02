@@ -1,7 +1,9 @@
-import CharacterAction, {CharacterActionType} from '@models/actions/character';
-import {LoadingActionType} from '@models/actions/loading';
-import Character from '@models/character';
-import CharacterState from '@models/state/character';
+import CharacterAction, {
+  CharacterActionType,
+} from "@models/actions/character";
+import { LoadingActionType } from "@models/actions/loading";
+import Character from "@models/character";
+import CharacterState from "@models/state/character";
 
 const initialState: CharacterState = {
   isLoading: false,
@@ -13,15 +15,15 @@ function characterReducer(
   state = initialState,
   action: CharacterAction,
 ): CharacterState {
-  const {type} = action;
+  const { type } = action;
 
   switch (type) {
     case CharacterActionType.GET_CHARACTER: {
-      const {payload} = action;
-      return {...state, character: payload.character};
+      const { payload } = action;
+      return { ...state, character: payload.character };
     }
     case CharacterActionType.GET_CHARACTER_LIST: {
-      const {payload} = action;
+      const { payload } = action;
       return {
         ...state,
         characterList: [...state.characterList, ...payload.characters],

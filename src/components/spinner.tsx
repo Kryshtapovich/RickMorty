@@ -1,5 +1,5 @@
-import React from 'react';
-import {ActivityIndicator, StyleSheet} from 'react-native';
+import React from "react";
+import { ActivityIndicator, StyleSheet } from "react-native";
 
 function Spinner() {
   return (
@@ -9,7 +9,7 @@ function Spinner() {
 
 export default Spinner;
 
-const {spinner} = StyleSheet.create({
+const { spinner } = StyleSheet.create({
   spinner: {
     margin: 20,
   },

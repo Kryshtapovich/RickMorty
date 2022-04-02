@@ -2,9 +2,9 @@ import {
   scrollCharactersAction,
   scrollEpisodesAction,
   scrollLocationsAction,
-} from '@actions/scroll';
-import ScrollAction from '@models/actions/scroll';
-import {Dispatch} from 'react';
+} from "@actions/scroll";
+import ScrollAction from "@models/actions/scroll";
+import { Dispatch } from "react";
 
 export function scrollCharacters(offset: number) {
   return function (dispatch: Dispatch<ScrollAction>) {

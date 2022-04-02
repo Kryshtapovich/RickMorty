@@ -1,6 +1,6 @@
-import EpisodeAction, {EpisodeActionType} from '@models/actions/episode';
-import {LoadingActionType} from '@models/actions/loading';
-import EpisodeState from '@models/state/episode';
+import EpisodeAction, { EpisodeActionType } from "@models/actions/episode";
+import { LoadingActionType } from "@models/actions/loading";
+import EpisodeState from "@models/state/episode";
 
 const initialState: EpisodeState = {
   episodes: [],
@@ -11,11 +11,11 @@ function episodeReducer(
   state = initialState,
   action: EpisodeAction,
 ): EpisodeState {
-  const {type} = action;
+  const { type } = action;
 
   switch (type) {
     case EpisodeActionType.GET_EPISODES: {
-      const {payload} = action;
+      const { payload } = action;
 
       return {
         ...state,
@@ -23,10 +23,10 @@ function episodeReducer(
       };
     }
     case LoadingActionType.START: {
-      return {...state, isLoading: true};
+      return { ...state, isLoading: true };
     }
     case LoadingActionType.STOP: {
-      return {...state, isLoading: false};
+      return { ...state, isLoading: false };
     }
     default:
       return state;
