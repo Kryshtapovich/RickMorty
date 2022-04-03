@@ -20,7 +20,7 @@ function CharactersModal(props: Props) {
   const { isPortrait } = useOrientation();
 
   const [isLoading, setIsloading] = useState(false);
-  const [characters, setCharacters] = useState<Array<ReducedCharacter>>();
+  const [characters, setCharacters] = useState<Array<ReducedCharacter>>([]);
 
   useEffect(() => {
     setIsloading(true);
@@ -28,36 +28,31 @@ function CharactersModal(props: Props) {
       setCharacters(res);
       setIsloading(false);
     });
-    return () => setCharacters(undefined);
+    return () => setCharacters([]);
   }, [isShown]);
 
-  const getHeight = () => {
-    if (characters) {
-      if (characters.length > 10) {
-        return { height: isPortrait ? 270 : 180 };
-      } else {
-        const multiplier = characters.length % 10;
-        if (isPortrait)
-          return { height: multiplier > 3 ? 270 : multiplier * 90 };
-        else return { height: multiplier > 3 ? 180 : multiplier * 90 };
-      }
-    }
-  };
+  const styles = isPortrait ? portraitStyles : landscapelStyles;
+
+  const getCharacter = ({ image, name }: ReducedCharacter) => (
+    <RN.View style={styles.character}>
+      <RN.Image source={{ uri: image }} style={styles.image} />
+      <RN.Text style={styles.text}>{name}</RN.Text>
+    </RN.View>
+  );
 
   return (
-    <Modal isShown={isShown} toggle={toggle} style={{ flex: 0 }}>
+    <Modal isShown={isShown} toggle={toggle} style={styles.modal}>
       <RN.Text style={styles.title}>{title}</RN.Text>
       {isLoading ? (
         <Spinner />
       ) : (
-        <RN.ScrollView style={getHeight()}>
-          {characters?.map(({ id, name, image }) => (
-            <RN.View key={id} style={styles.character}>
-              <RN.Image source={{ uri: image }} style={styles.image} />
-              <RN.Text style={styles.text}>{name}</RN.Text>
-            </RN.View>
-          ))}
-        </RN.ScrollView>
+        <RN.FlatList
+          data={characters}
+          key={Number(isPortrait)}
+          numColumns={isPortrait ? 1 : 2}
+          keyExtractor={(_, i) => i.toString()}
+          renderItem={({ item }) => getCharacter(item)}
+        />
       )}
     </Modal>
   );
@@ -65,7 +60,7 @@ function CharactersModal(props: Props) {
 
 export default CharactersModal;
 
-const styles = RN.StyleSheet.create({
+const baseStyles = RN.StyleSheet.create({
   title: {
     fontSize: 20,
     paddingBottom: 10,
@@ -73,6 +68,7 @@ const styles = RN.StyleSheet.create({
     textAlign: "center",
   },
   character: {
+    flex: 1,
     marginBottom: 10,
     alignItems: "center",
     flexDirection: "row",
@@ -87,5 +83,25 @@ const styles = RN.StyleSheet.create({
     flex: 1,
     fontSize: 18,
     fontWeight: "600",
+  },
+});
+
+const portraitStyles = RN.StyleSheet.create({
+  ...baseStyles,
+  modal: {
+    flex: 0.5,
+    width: "85%",
+  },
+});
+
+const landscapelStyles = RN.StyleSheet.create({
+  ...baseStyles,
+  modal: {
+    flex: 0.8,
+    width: 520,
+  },
+  character: {
+    ...baseStyles.character,
+    margin: 10,
   },
 });

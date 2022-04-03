@@ -23,7 +23,7 @@ function Modal(props: React.PropsWithChildren<Props>) {
       supportedOrientations={["portrait", "landscape"]}>
       <RN.View style={styles.container}>
         <RN.View style={[styles.content, style]}>
-          <RN.View>{children}</RN.View>
+          <RN.View style={styles.children}>{children}</RN.View>
           <RN.Pressable style={styles.closeButton} onPress={toggle}>
             <RN.Text style={styles.closeText}>Close</RN.Text>
           </RN.Pressable>
@@ -37,20 +37,23 @@ export default Modal;
 
 const baseStyles = RN.StyleSheet.create({
   container: {
-    width: "100%",
-    height: "100%",
+    flex: 1,
     alignItems: "center",
     justifyContent: "center",
     backgroundColor: "rgba(0, 0, 0, 0.5)",
   },
   content: {
+    flex: 0.7,
     padding: 20,
     borderRadius: 20,
     backgroundColor: "white",
     justifyContent: "space-between",
   },
+  children: {
+    flex: 1,
+    marginBottom: 10,
+  },
   closeButton: {
-    width: "100%",
     padding: 10,
     borderRadius: 20,
     backgroundColor: "#2196F3",
@@ -67,7 +70,7 @@ const portraitStyles = RN.StyleSheet.create({
   ...baseStyles,
   content: {
     ...baseStyles.content,
-    width: "91%",
+    marginHorizontal: 20,
   },
 });
 
@@ -75,6 +78,7 @@ const landscapelStyles = RN.StyleSheet.create({
   ...baseStyles,
   content: {
     ...baseStyles.content,
-    width: "70%",
+    flex: 0.7,
+    width: "65%",
   },
 });

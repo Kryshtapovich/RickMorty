@@ -8,6 +8,7 @@ import Character, { ReducedCharacter } from "@models/character";
 import { Pagination, ResultList } from "@models/pagination";
 import axios from "axios";
 import { Dispatch } from "redux";
+import { map } from "bluebird";
 
 import requests, { fixDate } from ".";
 
@@ -46,9 +47,9 @@ export function getCharacterList(page = 1) {
 }
 
 export function getReducedCharacters(characterUrls: Array<string>) {
-  return Promise.all(
-    characterUrls.map(url =>
-      axios.get<ReducedCharacter>(url).then(res => res.data),
-    ),
+  return map(
+    characterUrls,
+    url => axios.get<ReducedCharacter>(url).then(res => res.data),
+    { concurrency: 3 },
   );
 }
