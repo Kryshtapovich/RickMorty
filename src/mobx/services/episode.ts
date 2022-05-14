@@ -1,15 +1,8 @@
-import Episode from '@models/episode';
-import {ResultList} from '@models/pagination';
+import { Episode, ResultList } from "@mobx/models";
 
-import requests, {fixDate} from '.';
+import { getPagedData, requests } from ".";
 
 export async function getEpisodes(page = 1) {
-  const {info, results} = await requests.get<ResultList<Episode>>(
-    `/episode?page=${page}`,
-  );
-  
-  return {
-    pagination: {nextPage: page + 1, hasMore: info.next !== null},
-    list: results.map(fixDate),
-  };
+  const result = await requests.get<ResultList<Episode>>(`/episode?page=${page}`);
+  return getPagedData(page, result);
 }

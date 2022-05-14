@@ -1,34 +1,60 @@
-import Character from '@models/character';
-import {getCharacter, getCharacterList} from '@services/character';
-import {makeAutoObservable, runInAction} from 'mobx';
+import { makeAutoObservable, runInAction } from "mobx";
 
-class CharacterStore {
-  isLoading = false;
-  character = {} as Character;
-  characterList: Array<Character> = [];
+import { Character, PagedData } from "@mobx/models";
+import { getCharacters, getCharactersByName } from "@mobx/services";
+
+const initialData: PagedData<Character> = {
+  items: [],
+  nextPage: 1,
+  hasMore: true
+};
+
+export class CharacterStore {
+  error?: string;
+  characters = initialData;
+  filteredCharacters = initialData;
 
   constructor() {
     makeAutoObservable(this);
   }
 
-  getCharacter = async (id: number) => {
-    this.isLoading = true;
-    const character = await getCharacter(id);
-    runInAction(() => {
-      this.character = character;
-      this.isLoading = false;
-    });
+  getCharactersByName = async (name?: string, page = 1) => {
+    if (!name) {
+      this.filteredCharacters = initialData;
+      this.error = undefined;
+      return;
+    }
+
+    try {
+      const result = await getCharactersByName(name, page);
+      runInAction(() => {
+        this.filteredCharacters = {
+          ...result,
+          items: page === 1 ? result.items : [...this.filteredCharacters.items, ...result.items]
+        };
+        this.error = undefined;
+      });
+    } catch (error) {
+      if (error instanceof Error && error.message !== "Request failed with status code 404") {
+        this.error = error.message;
+      }
+    }
   };
 
-  getCharacterList = async (page: number) => {
-    this.isLoading = true;
-    const {pagination, list} = await getCharacterList(page);
-    runInAction(() => {
-      this.characterList = [...this.characterList, ...list];
-      this.isLoading = false;
-    });
-    return pagination;
+  getCharacters = async (page = 1) => {
+    try {
+      const result = await getCharacters(page);
+      runInAction(() => {
+        this.characters = {
+          ...result,
+          items: [...this.characters.items, ...result.items]
+        };
+        this.error = undefined;
+      });
+    } catch (error) {
+      if (error instanceof Error && error.message !== "Request failed with status code 404") {
+        this.error = error.message;
+      }
+    }
   };
 }
-
-export default CharacterStore;

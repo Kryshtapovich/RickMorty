@@ -1,17 +1,13 @@
-import {useEffect, useState} from 'react';
-import {Dimensions, ScaledSize} from 'react-native';
+import { useEffect, useState } from "react";
 
-function useOrientation(onChange?: (width: number, height: number) => void) {
-  const [window, setWindow] = useState(Dimensions.get('window'));
+import { Dimensions } from "react-native";
 
-  const handleChange = (window: ScaledSize) => {
-    setWindow(window);
-    onChange && onChange(window.width, window.height);
-  };
+export function useOrientation() {
+  const [window, setWindow] = useState(Dimensions.get("window"));
 
   useEffect(() => {
-    const subscription = Dimensions.addEventListener('change', ({window}) =>
-      handleChange(window),
+    const subscription = Dimensions.addEventListener("change", ({ window }) =>
+      setWindow(window)
     );
     return () => subscription.remove();
   }, []);
@@ -19,8 +15,6 @@ function useOrientation(onChange?: (width: number, height: number) => void) {
   return {
     width: window.width,
     height: window.height,
-    isPortrait: window.width < window.height,
+    isPortrait: window.width < window.height
   };
 }
-
-export default useOrientation;

@@ -1,9 +1,9 @@
-export default interface Location {
+import { ResponseObject } from ".";
+
+export interface Location extends ResponseObject {
   id: number;
-  name: string;
   type: string;
   dimension: string;
   residents: Array<string>;
-  url: string;
   created: string;
 }

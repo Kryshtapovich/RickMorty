@@ -1,6 +1,6 @@
-import {makeAutoObservable, runInAction} from 'mobx';
+import { makeAutoObservable } from "mobx";
 
-class ScrollStore {
+export class ScrollStore {
   characterOffset = 0;
   locationOffset = 0;
   episodeOffset = 0;
@@ -21,5 +21,3 @@ class ScrollStore {
     this.episodeOffset = offset;
   };
 }
-
-export default ScrollStore;

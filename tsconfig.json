@@ -12,14 +12,13 @@
     "noEmit": true,
     "baseUrl": "./src",
     "paths": {
-      "@hooks/*": ["./hooks/*"],
-      "@models/*": ["./mobx/models/*"],
-      "@services/*": ["./mobx/services/*"],
-      "@stores": ["./mobx/stores"],
-      "@stores/*": ["./mobx/stores/*"],
-      "@components/*": ["./components/*"],
-      "@screens/*": ["./screens/*"],
-      "@navigation": ["./navigation"]
+      "@utils": ["./utils"],
+      "@hooks": ["./hooks"],
+      "@mobx/*": ["./mobx/*"],
+      "@screens": ["./screens"],
+      "@assets/*": ["../assets/*"],
+      "@navigation": ["./navigation"],
+      "@components/*": ["./components/*"]
     }
   },
   "exclude": ["node_modules"]

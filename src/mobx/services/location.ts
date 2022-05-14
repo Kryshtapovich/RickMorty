@@ -1,15 +1,8 @@
-import Location from 'mobx/models/location';
-import {ResultList} from 'mobx/models/pagination';
+import { Location, ResultList } from "@mobx/models";
 
-import requests, {fixDate} from '.';
+import { getPagedData, requests } from ".";
 
 export async function getLocations(page = 1) {
-  const {info, results} = await requests.get<ResultList<Location>>(
-    `/location?page=${page}`,
-  );
-
-  return {
-    pagination: {nextPage: page + 1, hasMore: info.next !== null},
-    list: results.map(fixDate),
-  };
+  const result = await requests.get<ResultList<Location>>(`/location?page=${page}`);
+  return getPagedData(page, result);
 }
